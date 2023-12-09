@@ -5,7 +5,7 @@ import Theme from "./components/theme";
 import { useRef } from "react";
 import Notes from "./components/notes";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "./lib/firebase";
 
 function Home() {
   let timerRef = useRef(null);

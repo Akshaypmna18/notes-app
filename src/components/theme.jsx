@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../components/ui/tooltip";
+} from "./ui/tooltip";
 
-function Theme({ className }) {
+function Theme() {
   const getTheme = () => {
     let savedTheme = localStorage.getItem("theme");
     return savedTheme || "dark";
@@ -32,11 +31,17 @@ function Theme({ className }) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <FontAwesomeIcon
-              className={`cursor-pointer text-[calc(1rem+1.5dvw)] ${className}`}
-              icon={theme === "light" ? faMoon : faSun}
-              onClick={toggleTheme}
-            />
+            {theme === "light" ? (
+              <MoonIcon
+                className="absolute top-12 right-8 w-[calc(1rem+1.5dvw)] h-[calc(1rem+1.5dvw)] cursor-pointer"
+                onClick={toggleTheme}
+              />
+            ) : (
+              <SunIcon
+                className="absolute top-12 right-8 w-[calc(1rem+1.5dvw)] h-[calc(1rem+1.5dvw)] cursor-pointer"
+                onClick={toggleTheme}
+              />
+            )}
           </TooltipTrigger>
           <TooltipContent>
             <p>Click to toggle theme</p>

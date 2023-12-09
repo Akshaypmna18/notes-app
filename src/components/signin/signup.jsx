@@ -1,11 +1,7 @@
 import { useState } from "react";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "../../../components/ui/alert";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import Theme from "../theme";
 import { Link, useNavigate } from "react-router-dom";
 // import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,10 +14,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
+} from "../ui/form";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
-import firebaseAuthErrors from "../../firebaseErrors";
+import { auth } from "../../lib/firebase";
+import firebaseAuthErrors from "../../lib/firebaseErrors";
 
 function Signup() {
   const navigate = useNavigate();

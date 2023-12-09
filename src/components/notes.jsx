@@ -1,11 +1,11 @@
 import Theme from "./theme";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth, db } from "../firebase";
-import { ref, set } from "firebase/database";
+import { auth, db } from "../lib/firebase";
+import { ref, set, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/ui/button";
-import { Separator } from "../../components/ui/separator";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import {
   Dialog,
   DialogContent,
@@ -14,8 +14,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/dialog";
-import { Input } from "../../components/ui/input";
+} from "./ui/dialog";
+import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -24,8 +24,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
-import { Textarea } from "../../components/ui/textarea";
+} from "./ui/form";
+import { Textarea } from "./ui/textarea";
 
 function Notes() {
   const [uid, setUid] = useState("");
@@ -49,17 +49,14 @@ function Notes() {
   };
 
   const addNotes = (data) => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userEmail = user.email;
-        const username = userEmail.replace(/[^a-zA-Z0-9]/g, "");
-        set(ref(db, `/notes/${username}`), {
-          title: data.title,
-          note: data.note,
-        });
-        form.reset();
-      }
+    const username = auth.currentUser.email.replace(/[^a-zA-Z0-9]/g, "");
+    const userNotesRef = ref(db, `/notes/${username}/`);
+    const newNoteRef = push(userNotesRef);
+    set(newNoteRef, {
+      title: data.title,
+      note: data.note,
     });
+    form.reset();
   };
 
   return (
