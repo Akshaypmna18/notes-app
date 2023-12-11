@@ -8,6 +8,8 @@ import {
 } from "./ui/tooltip";
 
 function Theme() {
+  const iconClassName = `w-[calc(1rem+1.5dvw)] h-[calc(1rem+1.5dvw)] cursor-pointer`;
+
   const getTheme = () => {
     let savedTheme = localStorage.getItem("theme");
     return savedTheme || "dark";
@@ -32,15 +34,9 @@ function Theme() {
         <Tooltip>
           <TooltipTrigger asChild>
             {theme === "light" ? (
-              <MoonIcon
-                className="absolute top-12 right-8 w-[calc(1rem+1.5dvw)] h-[calc(1rem+1.5dvw)] cursor-pointer"
-                onClick={toggleTheme}
-              />
+              <MoonIcon className={iconClassName} onClick={toggleTheme} />
             ) : (
-              <SunIcon
-                className="absolute top-12 right-8 w-[calc(1rem+1.5dvw)] h-[calc(1rem+1.5dvw)] cursor-pointer"
-                onClick={toggleTheme}
-              />
+              <SunIcon className={iconClassName} onClick={toggleTheme} />
             )}
           </TooltipTrigger>
           <TooltipContent>
