@@ -127,7 +127,9 @@ function Notes() {
         {notes[username]
           ? Object.entries(notes[username]).map(([noteId, { title, note }]) => (
               <div key={noteId} className="border p-4 mx-4">
-                <p className="font-semibold capitalize">{title}</p>
+                <p className="font-semibold capitalize">
+                  <big>{title}</big>
+                </p>
                 <Separator className="max-w-[10rem] mt-2 mb-3" />
                 <p>{note}</p>
               </div>
