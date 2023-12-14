@@ -2,6 +2,8 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import Theme from "../theme";
+import { useToast } from "../ui/use-toast";
+import { Toaster } from "../ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
 // import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,13 +18,12 @@ import {
 } from "../ui/form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../lib/firebase";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import firebaseAuthErrors from "../../lib/firebaseErrors";
 
 function Login() {
   const navigate = useNavigate();
-  const [alert, setAlert] = useState(null);
   const form = useForm();
+  const { toast } = useToast();
 
   const onLogin = async (data) => {
     const { email, password } = data;
@@ -34,20 +35,17 @@ function Login() {
         const errorCode = error.code;
         const errorMessage =
           firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
-        setAlert(
-          <Alert className="max-w-fit mx-auto" variant="destructive">
-            <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>{errorMessage}</AlertDescription>
-          </Alert>
-        );
-        setTimeout(() => setAlert(null), 3000);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMessage,
+        });
       });
   };
 
   return (
     <div className="space-y-8">
       <Theme />
-      {alert}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onLogin)} className="space-y-4">
           <FormField
@@ -93,6 +91,7 @@ function Login() {
             )}
           />
           <Button type="submit">Submit</Button>
+          <Toaster />
         </form>
       </Form>
       <p>

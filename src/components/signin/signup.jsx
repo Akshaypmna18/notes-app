@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import Theme from "../theme";
+import { useToast } from "../ui/use-toast";
+import { Toaster } from "../ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
 // import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -21,7 +22,7 @@ import firebaseAuthErrors from "../../lib/firebaseErrors";
 
 function Signup() {
   const navigate = useNavigate();
-  const [alert, setAlert] = useState(null);
+  const { toast } = useToast();
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -32,13 +33,11 @@ function Signup() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = firebaseAuthErrors[errorCode];
-        setAlert(
-          <Alert className="max-w-fit mx-auto" variant="destructive">
-            <AlertTitle>Heads up!</AlertTitle>
-            <AlertDescription>{errorMessage}</AlertDescription>
-          </Alert>
-        );
-        setTimeout(() => setAlert(null), 3000);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMessage,
+        });
       });
   };
 
@@ -46,7 +45,7 @@ function Signup() {
   return (
     <div className="space-y-8">
       <Theme />
-      {alert}
+      <Toaster />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {/* <FormField
