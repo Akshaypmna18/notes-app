@@ -20,10 +20,10 @@ function Home() {
   timerRef.current = timer;
 
   return (
-    <>
+    <div className="p-8">
       Hello Welcome to Aks Notes
       <Theme />
-    </>
+    </div>
   );
 }
 

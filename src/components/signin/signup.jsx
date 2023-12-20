@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Theme from "../theme";
@@ -19,10 +19,12 @@ import {
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../lib/firebase";
 import firebaseAuthErrors from "../../lib/firebaseErrors";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 function Signup() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [visibility, setVisibility] = useState(false);
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -59,7 +61,7 @@ function Signup() {
 
   const form = useForm();
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-8">
       <Theme />
       <Toaster />
       <Form {...form}>
@@ -139,11 +141,24 @@ function Signup() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
+                  <div className="relative">
+                    <Input
+                      type={visibility ? "text" : "password"}
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                    {visibility ? (
+                      <EyeOpenIcon
+                        onClick={() => setVisibility(!visibility)}
+                        className="absolute top-3 right-6"
+                      />
+                    ) : (
+                      <EyeClosedIcon
+                        onClick={() => setVisibility(!visibility)}
+                        className="absolute top-3 right-6"
+                      />
+                    )}
+                  </div>
                 </FormControl>
                 <FormDescription>Set a strong password</FormDescription>
                 <FormMessage />

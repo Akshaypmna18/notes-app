@@ -19,11 +19,13 @@ import {
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../lib/firebase";
 import firebaseAuthErrors from "../../lib/firebaseErrors";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 function Login() {
   const navigate = useNavigate();
   const form = useForm();
   const { toast } = useToast();
+  const [visibility, setVisibility] = useState(false);
 
   const onLogin = async (data) => {
     const { email, password } = data;
@@ -60,7 +62,7 @@ function Login() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-8">
       <Theme />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onLogin)} className="space-y-4">
@@ -95,11 +97,24 @@ function Login() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    {...field}
-                  />
+                  <div className="relative">
+                    <Input
+                      type={visibility ? "text" : "password"}
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                    {visibility ? (
+                      <EyeOpenIcon
+                        onClick={() => setVisibility(!visibility)}
+                        className="absolute top-3 right-6"
+                      />
+                    ) : (
+                      <EyeClosedIcon
+                        onClick={() => setVisibility(!visibility)}
+                        className="absolute top-3 right-6"
+                      />
+                    )}
+                  </div>
                 </FormControl>
                 <FormDescription></FormDescription>
                 <FormMessage />
@@ -117,8 +132,12 @@ function Login() {
         </Link>
       </p>
       <Button className="mt-8" onClick={handleClick}>
-        google signin
+        google login
       </Button>
+      <div className="mt-8">
+        <big>test account:</big> <br /> email : testaccount@mail.com <br />
+        password : password
+      </div>
     </div>
   );
 }
