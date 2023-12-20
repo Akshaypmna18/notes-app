@@ -16,8 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../lib/firebase";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../../lib/firebase";
 import firebaseAuthErrors from "../../lib/firebaseErrors";
 
 function Signup() {
@@ -33,6 +33,22 @@ function Signup() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = firebaseAuthErrors[errorCode];
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMessage,
+        });
+      });
+  };
+  const handleClick = () => {
+    signInWithPopup(auth, provider)
+      .then(() => {
+        navigate("/notes");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage =
+          firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
@@ -143,6 +159,9 @@ function Signup() {
           Login
         </Link>
       </p>
+      <Button className="mt-8" onClick={handleClick}>
+        google signin
+      </Button>
     </div>
   );
 }
