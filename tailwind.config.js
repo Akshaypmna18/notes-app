@@ -16,7 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        dancingScript: ["Dancing Script", "cursive"],
+      },
       colors: {
+        primaryColor: "#b8860b",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

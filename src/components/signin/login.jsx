@@ -1,12 +1,13 @@
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import Theme from "../theme";
+import { Separator } from "../ui/separator";
+import { Checkbox } from "../ui/checkbox";
 import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
-// import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 import {
   Form,
   FormControl,
@@ -20,12 +21,14 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../lib/firebase";
 import firebaseAuthErrors from "../../lib/firebaseErrors";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { Header } from "../components";
 
 function Login() {
   const navigate = useNavigate();
   const form = useForm();
   const { toast } = useToast();
   const [visibility, setVisibility] = useState(false);
+  const separatorClassNames = "w-[20%]";
 
   const onLogin = async (data) => {
     const { email, password } = data;
@@ -44,8 +47,26 @@ function Login() {
         });
       });
   };
-  const handleClick = () => {
+  const handleGoogleLogin = () => {
     signInWithPopup(auth, provider)
+      .then(() => {
+        navigate("/notes");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage =
+          firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: errorMessage,
+        });
+      });
+  };
+  const handleTestAccountLogin = async () => {
+    const email = "testaccount@mail.com";
+    const password = "password";
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         navigate("/notes");
       })
@@ -62,10 +83,19 @@ function Login() {
   };
 
   return (
-    <div className="space-y-8 p-8">
-      <Theme />
+    <section className="p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
+      <Header />
+      <div className="space-y-2 mt-4">
+        <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Login</h3>
+        <p>
+          Don't have an account yet?
+          <Link to="/signup" className="underline text-primaryColor ml-2">
+            SignUp
+          </Link>
+        </p>
+      </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onLogin)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onLogin)} className="space-y-4 mt-6">
           <FormField
             control={form.control}
             name="email"
@@ -74,11 +104,14 @@ function Login() {
             }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="font-semibold">
+                  <big>Email</big>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="email"
                     placeholder="Enter your email"
+                    className="focus-visible:ring-primaryColor"
                     {...field}
                   />
                 </FormControl>
@@ -95,23 +128,34 @@ function Login() {
             }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="flex justify-between">
+                  <big className="font-semibold ">Password</big>
+                  <p className="underline">
+                    <Link
+                      to="/forgetPassword"
+                      className="underline text-primaryColor"
+                    >
+                      Forget Password
+                    </Link>
+                  </p>
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
                       type={visibility ? "text" : "password"}
                       placeholder="Enter your password"
+                      className="focus-visible:ring-primaryColor"
                       {...field}
                     />
                     {visibility ? (
                       <EyeOpenIcon
                         onClick={() => setVisibility(!visibility)}
-                        className="absolute top-3 right-6"
+                        className="absolute top-3 right-6 cursor-pointer"
                       />
                     ) : (
                       <EyeClosedIcon
                         onClick={() => setVisibility(!visibility)}
-                        className="absolute top-3 right-6"
+                        className="absolute top-3 right-6 cursor-pointer"
                       />
                     )}
                   </div>
@@ -121,24 +165,44 @@ function Login() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <div className="flex items-center">
+            <Checkbox className="mr-2 data-[state=checked]:bg-primaryColor data-[state=checked]:border-primaryColor" />
+            Remember me?
+          </div>
+          <Button
+            className="w-full bg-primaryColor text-white hover:text-white hover:bg-primaryColor hover:font-semibold"
+            type="submit"
+          >
+            Login
+          </Button>
           <Toaster />
         </form>
       </Form>
-      <p>
-        Don't have an account?{" "}
-        <Link to="/signup" className="underline">
-          SignUp
-        </Link>
+      <p className="flex items-center mx-auto w-[80%] justify-center">
+        <Separator className={separatorClassNames} />
+        <span className="mx-2 whitespace-nowrap">Or Log in with</span>
+        <Separator className={separatorClassNames} />
       </p>
-      <Button className="mt-8" onClick={handleClick}>
-        google login
-      </Button>
-      <div className="mt-8">
+      <div className="flex flex-wrap justify-center gap-x-4">
+        <Button
+          className="mt-8 bg-secondary border-2 text-primaryColor hover:font-semibold hover:bg-secondary border-primaryColor"
+          onClick={handleGoogleLogin}
+        >
+          <FcGoogle className="mr-2" />
+          Google
+        </Button>
+        <Button
+          className="mt-8 bg-secondary border-2 text-primaryColor hover:font-semibold hover:bg-secondary border-primaryColor"
+          onClick={handleTestAccountLogin}
+        >
+          Test account
+        </Button>
+      </div>
+      {/* <div className="mt-8">
         <big>test account:</big> <br /> email : testaccount@mail.com <br />
         password : password
-      </div>
-    </div>
+      </div> */}
+    </section>
   );
 }
 

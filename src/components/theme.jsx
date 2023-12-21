@@ -7,8 +7,8 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 
-function Theme() {
-  const iconClassName = `w-[calc(1rem+1.5dvw)] h-[calc(1rem+1.5dvw)] cursor-pointer`;
+function Theme({ className }) {
+  const iconClassName = `min-w-[calc(1rem+1.5dvw)] min-h-[calc(1rem+1.5dvw)] cursor-pointer ${className}`;
 
   const getTheme = () => {
     let savedTheme = localStorage.getItem("theme");

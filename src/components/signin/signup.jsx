@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Theme from "../theme";
 import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
-// import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -20,6 +18,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../lib/firebase";
 import firebaseAuthErrors from "../../lib/firebaseErrors";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { Header } from "../components";
 
 function Signup() {
   const navigate = useNavigate();
@@ -61,8 +60,8 @@ function Signup() {
 
   const form = useForm();
   return (
-    <div className="space-y-8 p-8">
-      <Theme />
+    <section className="space-y-8 p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
+      <Header />
       <Toaster />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -117,7 +116,8 @@ function Signup() {
                   />
                 </FormControl>
                 <FormDescription>
-                  You cannot change your email once set
+                  Be careful you cannot change your email once set and this
+                  email is used to reset password
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -177,7 +177,7 @@ function Signup() {
       <Button className="mt-8" onClick={handleClick}>
         google signin
       </Button>
-    </div>
+    </section>
   );
 }
 
