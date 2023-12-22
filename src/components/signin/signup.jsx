@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 import { useToast } from "../ui/use-toast";
 import { Toaster } from "../ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 import {
   Form,
   FormControl,
@@ -24,6 +26,8 @@ function Signup() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [visibility, setVisibility] = useState(false);
+  const form = useForm();
+  const separatorClassNames = "w-[20%]";
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -41,7 +45,7 @@ function Signup() {
         });
       });
   };
-  const handleClick = () => {
+  const handleGoogleLogin = () => {
     signInWithPopup(auth, provider)
       .then(() => {
         navigate("/notes");
@@ -58,38 +62,21 @@ function Signup() {
       });
   };
 
-  const form = useForm();
   return (
-    <section className="space-y-8 p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
+    <section className="p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
       <Header />
       <Toaster />
+      <div className="space-y-2 mt-4">
+        <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Signup</h3>
+        <p>
+          Already have an account?
+          <Link to="/login" className="underline text-primaryColor ml-2">
+            Login
+          </Link>
+        </p>
+      </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          {/* <FormField
-            control={form.control}
-            name="username"
-            rules={{
-              required: { value: true, message: "This is required*" },
-              minLength: {
-                value: 3,
-                message: "Minimum number of characters is 3",
-              },
-              maxLength: {
-                value: 25,
-                message: "Maximum number of characters is 25",
-              },
-            }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter your username" {...field} />
-                </FormControl>
-                <FormDescription>This is your display name.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-6">
           <FormField
             control={form.control}
             name="email"
@@ -107,7 +94,9 @@ function Signup() {
             }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="font-semibold">
+                  <big>Email</big>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -139,7 +128,9 @@ function Signup() {
             }}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="font-semibold">
+                  <big>Password</big>
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
@@ -165,17 +156,22 @@ function Signup() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button className="w-full" type="submit">
+            Signup
+          </Button>
         </form>
       </Form>
-      <p>
-        Already have an account?{" "}
-        <Link to="/login" className="underline">
-          Login
-        </Link>
+      <p className="flex items-center mx-auto w-[80%] justify-center mt-8">
+        <Separator className={separatorClassNames} />
+        <span className="mx-2 whitespace-nowrap">Or Sign up with</span>
+        <Separator className={separatorClassNames} />
       </p>
-      <Button className="mt-8" onClick={handleClick}>
-        google signin
+      <Button
+        className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor mx-auto flex items-center mt-4"
+        onClick={handleGoogleLogin}
+      >
+        <FcGoogle className="mr-2" />
+        Google
       </Button>
     </section>
   );

@@ -34,10 +34,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="forgetPassword" element={<ForgetPassword />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="notes" element={<Notes />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgetPassword" element={<ForgetPassword />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/notes" element={<Notes />} />
       </Routes>
     </>
   );

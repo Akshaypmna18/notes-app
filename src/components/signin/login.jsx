@@ -85,6 +85,7 @@ function Login() {
   return (
     <section className="p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
       <Header />
+      <Toaster />
       <div className="space-y-2 mt-4">
         <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Login</h3>
         <p>
@@ -111,7 +112,6 @@ function Login() {
                   <Input
                     type="email"
                     placeholder="Enter your email"
-                    className="focus-visible:ring-primaryColor"
                     {...field}
                   />
                 </FormControl>
@@ -144,7 +144,6 @@ function Login() {
                     <Input
                       type={visibility ? "text" : "password"}
                       placeholder="Enter your password"
-                      className="focus-visible:ring-primaryColor"
                       {...field}
                     />
                     {visibility ? (
@@ -169,39 +168,31 @@ function Login() {
             <Checkbox className="mr-2 data-[state=checked]:bg-primaryColor data-[state=checked]:border-primaryColor" />
             Remember me?
           </div>
-          <Button
-            className="w-full bg-primaryColor text-white hover:text-white hover:bg-primaryColor hover:font-semibold"
-            type="submit"
-          >
+          <Button className="w-full" type="submit">
             Login
           </Button>
-          <Toaster />
         </form>
       </Form>
-      <p className="flex items-center mx-auto w-[80%] justify-center">
+      <p className="flex items-center mx-auto w-[80%] justify-center mt-8">
         <Separator className={separatorClassNames} />
         <span className="mx-2 whitespace-nowrap">Or Log in with</span>
         <Separator className={separatorClassNames} />
       </p>
-      <div className="flex flex-wrap justify-center gap-x-4">
+      <div className="flex flex-wrap justify-center gap-x-4 mt-8 gap-y-2">
         <Button
-          className="mt-8 bg-secondary border-2 text-primaryColor hover:font-semibold hover:bg-secondary border-primaryColor"
+          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor"
           onClick={handleGoogleLogin}
         >
           <FcGoogle className="mr-2" />
           Google
         </Button>
         <Button
-          className="mt-8 bg-secondary border-2 text-primaryColor hover:font-semibold hover:bg-secondary border-primaryColor"
+          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor"
           onClick={handleTestAccountLogin}
         >
-          Test account
+          Guest account
         </Button>
       </div>
-      {/* <div className="mt-8">
-        <big>test account:</big> <br /> email : testaccount@mail.com <br />
-        password : password
-      </div> */}
     </section>
   );
 }
