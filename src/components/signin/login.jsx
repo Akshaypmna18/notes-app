@@ -180,14 +180,14 @@ function Login() {
       </p>
       <div className="flex flex-wrap justify-center gap-x-4 mt-8 gap-y-2">
         <Button
-          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor"
+          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary"
           onClick={handleGoogleLogin}
         >
           <FcGoogle className="mr-2" />
           Google
         </Button>
         <Button
-          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor"
+          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary"
           onClick={handleTestAccountLogin}
         >
           Guest account

@@ -167,7 +167,7 @@ function Signup() {
         <Separator className={separatorClassNames} />
       </p>
       <Button
-        className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor mx-auto flex items-center mt-4"
+        className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary mx-auto flex items-center mt-4"
         onClick={handleGoogleLogin}
       >
         <FcGoogle className="mr-2" />
