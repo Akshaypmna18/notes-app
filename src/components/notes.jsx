@@ -1,4 +1,3 @@
-import Theme from "./theme";
 import React, { useEffect, useState, useRef } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../lib/firebase";
@@ -6,15 +5,7 @@ import { ref, set, push, onValue, remove, update } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import {
-  Dialog,
-  DialogContent,
-  DialogClose,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
+import { DialogFooter } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import {
@@ -33,18 +24,22 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Header, Dialogs } from "./components";
 
 function Notes() {
-  const [uid, setUid] = useState("");
-  const [username, setUsername] = useState("");
-  const [notes, setNotes] = useState([]);
-  const [notesArray, setNotesArray] = useState([]);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [noteId, setNoteId] = useState("");
+  const [uid, setUid] = useState(""),
+    [username, setUsername] = useState(""),
+    [notes, setNotes] = useState([]),
+    [notesArray, setNotesArray] = useState([]),
+    [screenWidth, setScreenWidth] = useState(window.innerWidth),
+    [noteId, setNoteId] = useState(""),
+    [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false),
+    [isSmallFormOpen, setIsSmallFormOpen] = useState(false),
+    [isChecked, setIsChecked] = useState([]);
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState([]);
-  const form = useForm();
+
+  const largeForm = useForm(),
+    updateForm = useForm();
 
   const capitalize = (str) => {
     if (str) return str.charAt(0).toUpperCase() + str.slice(1);
@@ -74,8 +69,11 @@ function Notes() {
         setNotesArray((oldArray) => [...oldArray, note])
       );
     }
-    setIsChecked(Array(notesArray.length).fill(false));
   }, [notes]);
+
+  useEffect(() => {
+    setIsChecked(Array(notesArray.length).fill(false));
+  }, [notesArray]);
 
   const onLogout = () => {
     signOut(auth).then(() => {
@@ -83,35 +81,8 @@ function Notes() {
     });
   };
 
-  const addNote = ({ title, note }) => {
-    const userNotesRef = ref(db, `/notes/${username}/`);
-    const newNoteRef = push(userNotesRef);
-    set(newNoteRef, {
-      title: capitalize(title) || "",
-      note: note,
-    });
-    fetchNotes();
-    form.setValue("title", "");
-    form.setValue("note", "");
-  };
-
   const deleteNote = (noteId) =>
     remove(ref(db, `/notes/${username}/${noteId}`));
-
-  const updateNote = () => {
-    const updatedTitle = form.getValues(`${noteId}title`);
-    const updatedNote = form.getValues(`${noteId}note`);
-    if (updatedTitle) {
-      update(ref(db, `/notes/${username}/${noteId}`), {
-        title: capitalize(updatedTitle) || "",
-      });
-    }
-    if (updatedNote) {
-      update(ref(db, `/notes/${username}/${noteId}`), {
-        note: updatedNote,
-      });
-    }
-  };
 
   const handleResize = () => setScreenWidth(window.innerWidth);
 
@@ -125,9 +96,9 @@ function Notes() {
   const formRef = useRef();
   const handleClickOutside = (event) => {
     if (formRef.current && !formRef.current.contains(event.target)) {
-      setIsOpen(false);
-      form.setValue("title", "");
-      form.setValue("note", "");
+      setIsCollapsibleOpen(false);
+      largeForm.setValue("title", "");
+      largeForm.setValue("note", "");
     }
   };
 
@@ -141,28 +112,119 @@ function Notes() {
   const handleCheckboxClick = (index) =>
     setIsChecked(isChecked.map((item, pos) => (pos === index ? !item : item)));
 
+  const addNote = ({ title, note }) => {
+    const userNotesRef = ref(db, `/notes/${username}/`);
+    const newNoteRef = push(userNotesRef);
+    set(newNoteRef, {
+      title: capitalize(title) || "",
+      note: note,
+    });
+    fetchNotes();
+    largeForm.reset();
+    largeForm.setValue("title", "");
+    setIsSmallFormOpen(false);
+  };
+
+  const [open, setOpen] = useState(false);
+  const SmallForms = ({ defaultValues = {}, isUpdate = false }) => {
+    const smallForm = useForm({ defaultValues });
+    const onSubmit = ({ title, note }) => {
+      if (isUpdate) {
+        if (title) {
+          update(ref(db, `/notes/${username}/${noteId}`), {
+            title: capitalize(title) || "",
+          });
+        }
+        if (note) {
+          update(ref(db, `/notes/${username}/${noteId}`), {
+            note: note,
+          });
+        }
+      } else {
+        const userNotesRef = ref(db, `/notes/${username}/`);
+        const newNoteRef = push(userNotesRef);
+        set(newNoteRef, {
+          title: capitalize(title) || "",
+          note: note,
+        });
+        fetchNotes();
+      }
+      setOpen(false);
+    };
+    return (
+      <Form {...smallForm}>
+        <form onSubmit={smallForm.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={smallForm.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="Add title here..." {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={smallForm.control}
+            name="note"
+            rules={{
+              required: {
+                value: true,
+                message: "Note field cannot be empty",
+              },
+            }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Note</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Add note here..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <DialogFooter>
+            <Button type="submit" className="mx-auto w-[min(90%,10rem)]">
+              {isUpdate ? "Update" : "Add note"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </Form>
+    );
+  };
+
   return (
-    <section className="space-y-8 p-4">
-      <Theme />
-      <p>User id = {uid}</p>
+    <section className="space-y-4 p-8 xl:max-w-[80%] xl:mx-auto font-[roboto] relative">
+      <Header />
       {screenWidth > 600 ? (
-        <Collapsible onOpenChange={() => setIsOpen(!isOpen)} open={isOpen}>
-          <Form {...form}>
+        <Collapsible
+          onOpenChange={() => setIsCollapsibleOpen(!isCollapsibleOpen)}
+          open={isCollapsibleOpen}
+        >
+          <Form {...largeForm}>
             <form
-              onSubmit={form.handleSubmit(addNote)}
-              className="space-y-4 w-[20rem] "
+              onSubmit={largeForm.handleSubmit(addNote)}
+              className="space-y-4 w-[20rem] mx-auto"
               ref={formRef}
             >
-              <CollapsibleTrigger>
+              <CollapsibleTrigger
+                onClick={(e) => {
+                  if (isCollapsibleOpen) e.preventDefault();
+                }}
+              >
                 <FormField
-                  control={form.control}
+                  control={largeForm.control}
                   name="title"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
                         <Input
                           placeholder={
-                            isOpen ? "Add title here..." : "Add new note"
+                            isCollapsibleOpen
+                              ? "Add title here..."
+                              : "Add new note"
                           }
                           {...field}
                           className="w-[20rem]"
@@ -174,7 +236,7 @@ function Notes() {
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <FormField
-                  control={form.control}
+                  control={largeForm.control}
                   name="note"
                   rules={{
                     required: {
@@ -191,159 +253,86 @@ function Notes() {
                           className="w-[20rem]"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button
-                  type="submit"
-                  className="mx-auto w-[min(90%,10rem)] mt-4"
-                >
-                  Submit
+                <Button type="submit" className="w-full mt-4">
+                  Add note
                 </Button>
               </CollapsibleContent>
             </form>
           </Form>
         </Collapsible>
       ) : (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="fixed right-8 bottom-12 text-[calc(2rem+1vw)] rounded-full h-[calc(2.5rem+1vw)] w-[calc(2.5rem+1vw)">
-              <span className="-mt-1">+</span>
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Add new note</DialogTitle>
-            </DialogHeader>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(addNote)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Add title here..." {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="note"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "Note field cannot be empty",
-                    },
-                  }}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Note</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Add note here..." {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button
-                      type="submit"
-                      className="mx-auto w-[min(90%,10rem)]"
-                    >
-                      Submit
-                    </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </form>
-            </Form>
-          </DialogContent>
-        </Dialog>
+        <Dialogs
+          open={open}
+          title="Add new note"
+          Forms={() => <SmallForms isUpdate={false} />}
+        >
+          <Button
+            onClick={() => setOpen()}
+            className="fixed right-8 bottom-12 text-[calc(2rem+1vw)] rounded-full h-[calc(2.5rem+1vw)] w-[calc(2.5rem+1vw)"
+          >
+            <span>+</span>
+          </Button>
+        </Dialogs>
       )}
       <br />
-      <h3 className="font-bold text-2xl">Notes</h3>
-      <div className="space-y-4">
+      <div className="space-y-4 space-x-8 mt-8">
         {notesArray.length > 0
           ? notesArray.map(([noteId, { title, note }], index) => (
-              <Dialog key={noteId}>
-                <DialogTrigger>
-                  <div className="border p-4 mx-4 rounded-md max-w-[20rem] hover:border-primary">
-                    <p className="font-semibold capitalize flex justify-between">
-                      <Checkbox
-                        className="min-h-[calc(0.5rem+1vw)] min-w-[calc(0.5rem+1vw)] mt-2 mr-4 cursor-pointer              hover:border-yellow-500"
-                        checked={isChecked[index]}
+              <Dialogs
+                key={index}
+                open={open}
+                title="Update note"
+                Forms={() => (
+                  <SmallForms
+                    defaultValues={{ title: title, note: note }}
+                    isUpdate={true}
+                  />
+                )}
+              >
+                <div
+                  className="border p-4 rounded-md max-w-[20rem] hover:border-primary cursor-pointer inline"
+                  onClick={() => {
+                    setOpen();
+                    setNoteId(noteId);
+                  }}
+                >
+                  <p className="font-semibold capitalize flex justify-between items-center">
+                    <Checkbox
+                      className="min-h-[calc(0.5rem+0.5vw)] min-w-[calc(0.5rem+0.5vw)] cursor-pointer              hover:border-primaryColor"
+                      checked={isChecked[index]}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCheckboxClick(index);
+                      }}
+                    />
+                    <big className="mx-4">{title}</big>
+                    <span>
+                      <TrashIcon
+                        className="min-h-[calc(1.25rem+0.1vw)] min-w-[calc(1.25rem+0.1vw)]  cursor-pointer              hover:text-red-800"
                         onClick={(e) => {
                           e.preventDefault();
-                          handleCheckboxClick(index);
+                          deleteNote(noteId);
                         }}
                       />
-                      <big>{title}</big>
-                      <span>
-                        <TrashIcon
-                          className="min-h-[calc(1rem+1vw)] min-w-[calc(1rem+1vw)] mt-2 sm:mt-1 ml-4 cursor-pointer              hover:text-red-800"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            deleteNote(noteId);
-                          }}
-                        />
-                      </span>
-                    </p>
-                    <Separator className="mt-2 mb-3" />
-                    <p>{note}</p>
-                  </div>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(updateNote)}
-                      className="space-y-4"
-                    >
-                      <FormField
-                        control={form.control}
-                        name={`${noteId}title`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Title</FormLabel>
-                            <FormControl>
-                              <Input defaultValue={title} {...field} />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`${noteId}note`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Note</FormLabel>
-                            <FormControl>
-                              <Textarea defaultValue={note} {...field} />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <DialogFooter>
-                        <DialogClose asChild>
-                          <Button
-                            onClick={() => setNoteId(noteId)}
-                            type="submit"
-                            className="mx-auto w-[min(90%,10rem)]"
-                          >
-                            Update
-                          </Button>
-                        </DialogClose>
-                      </DialogFooter>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
+                    </span>
+                  </p>
+                  <Separator className="mt-2 mb-3" />
+                  <p>{note}</p>
+                </div>
+              </Dialogs>
             ))
           : ""}
       </div>
-      <Button onClick={onLogout}>Logout</Button>
+      <Button
+        className="absolute top-[calc(1rem+0.75vw)] right-[calc(4rem+2vw)]"
+        onClick={onLogout}
+      >
+        Logout
+      </Button>
     </section>
   );
 }
