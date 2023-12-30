@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../components/ui/tooltip";
 
 function Theme({ className }) {
   const iconClassName = `min-w-[calc(1rem+1.5dvw)] min-h-[calc(1rem+1.5dvw)] cursor-pointer ${className}`;

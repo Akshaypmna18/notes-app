@@ -1,8 +1,8 @@
 import React from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useToast } from "../ui/use-toast";
-import { Toaster } from "../ui/toaster";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -12,14 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "@/components/ui/form";
 import { sendPasswordResetEmail } from "firebase/auth";
-import firebaseAuthErrors from "../../lib/firebaseErrors";
+import firebaseAuthErrors from "@/lib/firebaseErrors";
 import { auth } from "@/lib/firebase";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../components";
+import Header from "@/layouts/Header";
 
-function ForgetPassword() {
+function ForgotPassword() {
   const navigate = useNavigate();
   const form = useForm();
   const { toast } = useToast();
@@ -44,7 +44,7 @@ function ForgetPassword() {
   };
 
   return (
-    <section className="p-8 space-y-8">
+    <section className="p-8 xl:max-w-[80%] xl:mx-auto space-y-8">
       <Header />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(resetPassword)} className="space-y-4">
@@ -81,4 +81,4 @@ function ForgetPassword() {
   );
 }
 
-export default ForgetPassword;
+export default ForgotPassword;

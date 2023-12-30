@@ -1,14 +1,13 @@
 import React from "react";
-import Theme from "./theme";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "@/components/ui/dialog";
 
-export const Dialogs = ({ open, children, title, Forms }) => {
+function DialogModal({ open, children, title, Forms }) {
   return (
     <Dialog open={open}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -20,13 +19,6 @@ export const Dialogs = ({ open, children, title, Forms }) => {
       </DialogContent>
     </Dialog>
   );
-};
+}
 
-export const Header = () => (
-  <div className="flex justify-between items-center text-primaryColor">
-    <h2 className="text-[calc(1.5rem+1vw)] font-bold font-dancingScript">
-      Aks Notes
-    </h2>
-    <Theme />
-  </div>
-);
+export default DialogModal;

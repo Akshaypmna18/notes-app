@@ -3,10 +3,10 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../lib/firebase";
 import { ref, set, push, onValue, remove, update } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import { DialogFooter } from "./ui/dialog";
-import { Input } from "./ui/input";
+import { Button } from "../components/ui/button";
+import { Separator } from "../components/ui/separator";
+import { DialogFooter } from "../components/ui/dialog";
+import { Input } from "../components/ui/input";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -15,8 +15,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Textarea } from "./ui/textarea";
+} from "../components/ui/form";
+import { Textarea } from "../components/ui/textarea";
 import { TrashIcon } from "@radix-ui/react-icons";
 import {
   Collapsible,
@@ -24,7 +24,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Header, Dialogs } from "./components";
+import DialogModal from "../components/DialogModal";
+import Header from "@/layouts/Header";
 
 function Notes() {
   const [uid, setUid] = useState(""),
@@ -266,7 +267,7 @@ function Notes() {
           </Form>
         </Collapsible>
       ) : (
-        <Dialogs
+        <DialogModal
           open={open}
           title="Add new note"
           Forms={() => <SmallForms isUpdate={false} />}
@@ -277,13 +278,13 @@ function Notes() {
           >
             <span>+</span>
           </Button>
-        </Dialogs>
+        </DialogModal>
       )}
       <br />
       <div className="space-y-4 space-x-8 mt-8">
         {notesArray.length > 0
           ? notesArray.map(([noteId, { title, note }], index) => (
-              <Dialogs
+              <DialogModal
                 key={index}
                 open={open}
                 title="Update note"
@@ -324,7 +325,7 @@ function Notes() {
                   <Separator className="mt-2 mb-3" />
                   <p>{note}</p>
                 </div>
-              </Dialogs>
+              </DialogModal>
             ))
           : ""}
       </div>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { useToast } from "../ui/use-toast";
-import { Toaster } from "../ui/toaster";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { Separator } from "../../components/ui/separator";
+import { useToast } from "../../components/ui/use-toast";
+import { Toaster } from "../../components/ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
@@ -15,12 +15,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../components/ui/form";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../../lib/firebase";
-import firebaseAuthErrors from "../../lib/firebaseErrors";
+import { auth, provider } from "@/lib/firebase";
+import firebaseAuthErrors from "@/lib/firebaseErrors";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import { Header } from "../components";
+import Header from "@/layouts/Header";
 
 function Signup() {
   const navigate = useNavigate();

@@ -1,10 +1,10 @@
-import { Input } from "../ui/input";
+import { Input } from "../../components/ui/input";
 import { useState } from "react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { Checkbox } from "../ui/checkbox";
-import { useToast } from "../ui/use-toast";
-import { Toaster } from "../ui/toaster";
+import { Button } from "../../components/ui/button";
+import { Separator } from "../../components/ui/separator";
+import { Checkbox } from "../../components/ui/checkbox";
+import { useToast } from "../../components/ui/use-toast";
+import { Toaster } from "../../components/ui/toaster";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
@@ -16,12 +16,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../components/ui/form";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../../lib/firebase";
-import firebaseAuthErrors from "../../lib/firebaseErrors";
+import { auth, provider } from "@/lib/firebase";
+import firebaseAuthErrors from "@/lib/firebaseErrors";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import { Header } from "../components";
+import Header from "@/layouts/Header";
 
 function Login() {
   const navigate = useNavigate();
@@ -138,7 +138,7 @@ function Login() {
                       to="/forgetPassword"
                       className="underline text-primaryColor"
                     >
-                      Forget Password
+                      Forgot Password
                     </Link>
                   </p>
                 </FormLabel>
