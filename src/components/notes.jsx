@@ -36,10 +36,10 @@ function Notes() {
     [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false),
     [isSmallFormOpen, setIsSmallFormOpen] = useState(false),
     [isChecked, setIsChecked] = useState([]);
+  const defaultValues = {};
   const navigate = useNavigate();
 
-  const largeForm = useForm(),
-    updateForm = useForm();
+  const largeForm = useForm({ defaultValues });
 
   const capitalize = (str) => {
     if (str) return str.charAt(0).toUpperCase() + str.slice(1);
@@ -117,11 +117,12 @@ function Notes() {
     const newNoteRef = push(userNotesRef);
     set(newNoteRef, {
       title: capitalize(title) || "",
-      note: note,
+      note: capitalize(note),
     });
     fetchNotes();
     largeForm.reset();
     largeForm.setValue("title", "");
+    largeForm.setValue("note", "");
     setIsSmallFormOpen(false);
   };
 
@@ -137,7 +138,7 @@ function Notes() {
         }
         if (note) {
           update(ref(db, `/notes/${username}/${noteId}`), {
-            note: note,
+            note: capitalize(note),
           });
         }
       } else {
@@ -145,7 +146,7 @@ function Notes() {
         const newNoteRef = push(userNotesRef);
         set(newNoteRef, {
           title: capitalize(title) || "",
-          note: note,
+          note: capitalize(note),
         });
         fetchNotes();
       }

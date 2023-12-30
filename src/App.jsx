@@ -22,8 +22,9 @@ function Home() {
 
   return (
     <section className="grid place-items-center min-h-[100svh] p-8">
-      <h1 className="text-[calc(2rem+1vw)] text-center font-semibold font-[lobster] text-primaryColor">
-        Hello Welcome to Aks Notes <Theme className={"hidden"} />
+      <h1 className="text-[calc(2rem+1vw)] text-center  font-[lobster] text-primaryColor">
+        Hello Welcome to <span className="font-dancingScript">Aks Notes</span>{" "}
+        <Theme className={"hidden"} />
       </h1>
     </section>
   );
@@ -31,15 +32,13 @@ function Home() {
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgetPassword" element={<ForgetPassword />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/notes" element={<Notes />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/forgetPassword" element={<ForgetPassword />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/notes" element={<Notes />} />
+    </Routes>
   );
 }
 

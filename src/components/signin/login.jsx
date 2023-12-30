@@ -25,7 +25,7 @@ import { Header } from "../components";
 
 function Login() {
   const navigate = useNavigate();
-  const form = useForm();
+  const form = useForm({ defaultValues: {} });
   const { toast } = useToast();
   const [visibility, setVisibility] = useState(false);
   const separatorClassNames = "w-[20%]";
@@ -90,7 +90,10 @@ function Login() {
         <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Login</h3>
         <p>
           Don't have an account yet?
-          <Link to="/signup" className="underline text-primaryColor ml-2">
+          <Link
+            to="/signup"
+            className="underline text-primaryColor ml-2 hover:font-bold"
+          >
             SignUp
           </Link>
         </p>

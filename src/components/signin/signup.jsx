@@ -70,7 +70,10 @@ function Signup() {
         <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Signup</h3>
         <p>
           Already have an account?
-          <Link to="/login" className="underline text-primaryColor ml-2">
+          <Link
+            to="/login"
+            className="underline text-primaryColor ml-2 hover:font-bold"
+          >
             Login
           </Link>
         </p>
