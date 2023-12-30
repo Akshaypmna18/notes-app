@@ -3,7 +3,7 @@ import Theme from "@/features/Theme";
 
 function Header() {
   return (
-    <header className="flex justify-between items-center xl:max-w-[80%] xl:mx-auto text-primaryColor">
+    <header className="flex justify-between items-center text-primaryColor">
       <h2 className="text-[calc(1.5rem+1vw)] font-bold font-dancingScript">
         Aks Notes
       </h2>
