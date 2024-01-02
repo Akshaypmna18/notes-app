@@ -20,7 +20,7 @@ module.exports = {
         dancingScript: ["Dancing Script", "cursive"],
       },
       colors: {
-        primaryColor: "#b8860b",
+        primaryColor: "#0077b5",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
