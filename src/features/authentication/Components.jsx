@@ -3,7 +3,6 @@ import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { useNotes } from "@/store";
 
 export function ButtonComponent({ children, onClick, className }) {
   return (
@@ -27,11 +26,11 @@ export function Btn({ children, type }) {
 export function SeparatorComponent({ children }) {
   const separatorClassNames = "w-[20%]";
   return (
-    <p className="flex items-center mx-auto w-[80%] justify-center mt-8">
+    <div className="flex items-center mx-auto w-[80%] justify-center mt-8">
       <Separator className={separatorClassNames} />
       <span className="mx-2 whitespace-nowrap">{children}</span>
       <Separator className={separatorClassNames} />
-    </p>
+    </div>
   );
 }
 
@@ -62,14 +61,10 @@ export function Header({ isSignup }) {
   );
 }
 
-export function EyeIcon() {
-  const { showPassword, setShowPassword } = useNotes((state) => state);
+export function EyeIcon({ onClick, showPassword }) {
   const size = 20;
   return (
-    <span
-      className="cursor-pointer absolute top-[0.55rem] right-6"
-      onClick={() => setShowPassword(!showPassword)}
-    >
+    <span className="cursor-pointer absolute top-3 right-6" onClick={onClick}>
       {showPassword ? (
         <IoEyeOutline size={size} />
       ) : (
