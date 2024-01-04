@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNotes } from "@/store";
 
 export function ButtonComponent({ children, onClick, className }) {
@@ -63,19 +63,18 @@ export function Header({ isSignup }) {
 }
 
 export function EyeIcon() {
-  const { passwordVisibility, setPasswordVisibility } = useNotes(
-    (state) => state
-  );
-  const IconClassName = "cursor-pointer absolute top-3 right-6";
-  return passwordVisibility ? (
-    <EyeOpenIcon
-      onClick={() => setPasswordVisibility(!passwordVisibility)}
-      className={IconClassName}
-    />
-  ) : (
-    <EyeClosedIcon
-      onClick={() => setPasswordVisibility(!passwordVisibility)}
-      className={IconClassName}
-    />
+  const { showPassword, setShowPassword } = useNotes((state) => state);
+  const size = 20;
+  return (
+    <span
+      className="cursor-pointer absolute top-[0.55rem] right-6"
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? (
+        <IoEyeOutline size={size} />
+      ) : (
+        <IoEyeOffOutline size={size} />
+      )}
+    </span>
   );
 }
