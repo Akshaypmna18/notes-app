@@ -211,17 +211,23 @@ function Notes() {
               className="space-y-4 w-[20rem] mx-auto"
               ref={formRef}
             >
-              <CollapsibleTrigger
-                onClick={(e) => {
-                  if (isCollapsibleOpen) e.preventDefault();
+              <FormField
+                control={largeForm.control}
+                name="title"
+                rules={{
+                  maxLength: {
+                    value: 25,
+                    message: "Title length should not exceed 25 characters",
+                  },
                 }}
-              >
-                <FormField
-                  control={largeForm.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <CollapsibleTrigger
+                        onClick={(e) => {
+                          if (isCollapsibleOpen) e.preventDefault();
+                        }}
+                      >
                         <Input
                           placeholder={
                             isCollapsibleOpen
@@ -231,11 +237,14 @@ function Notes() {
                           {...field}
                           className="w-[20rem]"
                         />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </CollapsibleTrigger>
+                      </CollapsibleTrigger>
+                    </FormControl>
+                    <FormMessage
+                      className={isCollapsibleOpen ? "" : "hidden"}
+                    />
+                  </FormItem>
+                )}
+              />
               <CollapsibleContent>
                 <FormField
                   control={largeForm.control}
@@ -281,7 +290,7 @@ function Notes() {
         </DialogModal>
       )}
       <br />
-      <div className="space-y-4 space-x-8 mt-8">
+      <div className="columns-2xs space-y-4 mt-8">
         {notesArray.length > 0
           ? notesArray.map(([noteId, { title, note }], index) => (
               <DialogModal
@@ -296,7 +305,7 @@ function Notes() {
                 )}
               >
                 <div
-                  className="border p-4 rounded-md max-w-[20rem] hover:border-primary cursor-pointer inline"
+                  className="border p-4 rounded-md mx-4 hover:border-primary cursor-pointer inline"
                   onClick={() => {
                     setOpen();
                     setNoteId(noteId);
