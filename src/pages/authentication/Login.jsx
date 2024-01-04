@@ -1,7 +1,5 @@
 import { Input } from "../../components/ui/input";
 import { useState } from "react";
-import { Button } from "../../components/ui/button";
-import { Separator } from "../../components/ui/separator";
 import { Checkbox } from "../../components/ui/checkbox";
 import { useToast } from "../../components/ui/use-toast";
 import { Toaster } from "../../components/ui/toaster";
@@ -21,14 +19,23 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/lib/firebase";
 import firebaseAuthErrors from "@/lib/firebaseErrors";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import Header from "@/layouts/Header";
+import CommonHeader from "@/layouts/Header";
+import {
+  ButtonComponent as Button,
+  SeparatorComponent as Separator,
+  Header,
+  EyeIcon,
+  Section,
+  Btn,
+} from "@/features/authentication/Components";
+import { useNotes } from "@/store";
 
 function Login() {
+  const { passwordVisibility } = useNotes((state) => state);
   const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(true);
   const form = useForm({ defaultValues: {} });
   const { toast } = useToast();
-  const [visibility, setVisibility] = useState(false);
-  const separatorClassNames = "w-[20%]";
 
   const onLogin = async (data) => {
     const { email, password } = data;
@@ -83,21 +90,10 @@ function Login() {
   };
 
   return (
-    <section className="p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
-      <Header />
+    <Section>
+      <CommonHeader />
       <Toaster />
-      <div className="space-y-2 mt-4">
-        <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Login</h3>
-        <p>
-          Don't have an account yet?
-          <Link
-            to="/signup"
-            className="underline text-primaryColor ml-2 hover:font-bold"
-          >
-            SignUp
-          </Link>
-        </p>
-      </div>
+      <Header />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onLogin)} className="space-y-4 mt-6">
           <FormField
@@ -145,21 +141,11 @@ function Login() {
                 <FormControl>
                   <div className="relative">
                     <Input
-                      type={visibility ? "text" : "password"}
+                      type={passwordVisibility ? "text" : "password"}
                       placeholder="Enter your password"
                       {...field}
                     />
-                    {visibility ? (
-                      <EyeOpenIcon
-                        onClick={() => setVisibility(!visibility)}
-                        className="absolute top-3 right-6 cursor-pointer"
-                      />
-                    ) : (
-                      <EyeClosedIcon
-                        onClick={() => setVisibility(!visibility)}
-                        className="absolute top-3 right-6 cursor-pointer"
-                      />
-                    )}
+                    <EyeIcon />
                   </div>
                 </FormControl>
                 <FormDescription></FormDescription>
@@ -168,35 +154,29 @@ function Login() {
             )}
           />
           <div className="flex items-center">
-            <Checkbox className="mr-2 data-[state=checked]:bg-primaryColor data-[state=checked]:border-primaryColor" />
-            Remember me?
+            <Checkbox
+              checked={isChecked}
+              className="mr-2 data-[state=checked]:bg-primaryColor data-[state=checked]:border-primaryColor"
+            />
+            <span
+              onClick={() => setIsChecked(!isChecked)}
+              className="cursor-pointer"
+            >
+              Remember me?
+            </span>
           </div>
-          <Button className="w-full" type="submit">
-            Login
-          </Button>
+          <Btn type="submit">Login</Btn>
         </form>
       </Form>
-      <p className="flex items-center mx-auto w-[80%] justify-center mt-8">
-        <Separator className={separatorClassNames} />
-        <span className="mx-2 whitespace-nowrap">Or Log in with</span>
-        <Separator className={separatorClassNames} />
-      </p>
+      <Separator>Or Log in with</Separator>
       <div className="flex flex-wrap justify-center gap-x-4 mt-8 gap-y-2">
-        <Button
-          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary"
-          onClick={handleGoogleLogin}
-        >
+        <Button onClick={handleGoogleLogin}>
           <FcGoogle className="mr-2" />
           Google
         </Button>
-        <Button
-          className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary"
-          onClick={handleTestAccountLogin}
-        >
-          Guest account
-        </Button>
+        <Button onClick={handleTestAccountLogin}>Guest account</Button>
       </div>
-    </section>
+    </Section>
   );
 }
 

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Input } from "../../components/ui/input";
-import { Button } from "../../components/ui/button";
-import { Separator } from "../../components/ui/separator";
 import { useToast } from "../../components/ui/use-toast";
 import { Toaster } from "../../components/ui/toaster";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -19,15 +17,22 @@ import {
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/lib/firebase";
 import firebaseAuthErrors from "@/lib/firebaseErrors";
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import Header from "@/layouts/Header";
+import CommonHeader from "@/layouts/Header";
+import {
+  ButtonComponent as Button,
+  SeparatorComponent as Separator,
+  Header,
+  EyeIcon,
+  Section,
+  Btn,
+} from "@/features/authentication/Components";
+import { useNotes } from "@/store";
 
 function Signup() {
+  const { passwordVisibility } = useNotes((state) => state);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [visibility, setVisibility] = useState(false);
   const form = useForm();
-  const separatorClassNames = "w-[20%]";
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -63,21 +68,10 @@ function Signup() {
   };
 
   return (
-    <section className="p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
-      <Header />
+    <Section>
+      <CommonHeader />
       <Toaster />
-      <div className="space-y-2 mt-4">
-        <h3 className="text-[calc(1.75rem+1vw)] font-semibold">Signup</h3>
-        <p>
-          Already have an account?
-          <Link
-            to="/login"
-            className="underline text-primaryColor ml-2 hover:font-bold"
-          >
-            Login
-          </Link>
-        </p>
-      </div>
+      <Header isSignup={true} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-6">
           <FormField
@@ -137,21 +131,11 @@ function Signup() {
                 <FormControl>
                   <div className="relative">
                     <Input
-                      type={visibility ? "text" : "password"}
+                      type={passwordVisibility ? "text" : "password"}
                       placeholder="Enter your password"
                       {...field}
                     />
-                    {visibility ? (
-                      <EyeOpenIcon
-                        onClick={() => setVisibility(!visibility)}
-                        className="absolute top-3 right-6"
-                      />
-                    ) : (
-                      <EyeClosedIcon
-                        onClick={() => setVisibility(!visibility)}
-                        className="absolute top-3 right-6"
-                      />
-                    )}
+                    <EyeIcon />
                   </div>
                 </FormControl>
                 <FormDescription>Set a strong password</FormDescription>
@@ -159,24 +143,15 @@ function Signup() {
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit">
-            Signup
-          </Button>
+          <Btn type="submit">Signup</Btn>
         </form>
       </Form>
-      <p className="flex items-center mx-auto w-[80%] justify-center mt-8">
-        <Separator className={separatorClassNames} />
-        <span className="mx-2 whitespace-nowrap">Or Sign up with</span>
-        <Separator className={separatorClassNames} />
-      </p>
-      <Button
-        className="bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary mx-auto flex items-center mt-4"
-        onClick={handleGoogleLogin}
-      >
+      <Separator>Or Sign up with</Separator>
+      <Button className="flex mx-auto mt-8" onClick={handleGoogleLogin}>
         <FcGoogle className="mr-2" />
         Google
       </Button>
-    </section>
+    </Section>
   );
 }
 
