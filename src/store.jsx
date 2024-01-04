@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 const notes = (set, get) => ({
-  passwordVisibility: false,
-  setPasswordVisibility: (value) => {
-    set(() => ({ passwordVisibility: value }));
+  showPassword: false,
+  setShowPassword: (value) => {
+    set(() => ({ showPassword: value }));
   },
 });
 

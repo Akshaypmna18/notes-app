@@ -31,7 +31,7 @@ import {
 import { useNotes } from "@/store";
 
 function Login() {
-  const { passwordVisibility } = useNotes((state) => state);
+  const { showPassword } = useNotes((state) => state);
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(true);
   const form = useForm({ defaultValues: {} });
@@ -141,7 +141,7 @@ function Login() {
                 <FormControl>
                   <div className="relative">
                     <Input
-                      type={passwordVisibility ? "text" : "password"}
+                      type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       {...field}
                     />
@@ -156,6 +156,7 @@ function Login() {
           <div className="flex items-center">
             <Checkbox
               checked={isChecked}
+              onClick={() => setIsChecked(!isChecked)}
               className="mr-2 data-[state=checked]:bg-primaryColor data-[state=checked]:border-primaryColor"
             />
             <span

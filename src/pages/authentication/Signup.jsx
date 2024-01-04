@@ -29,7 +29,7 @@ import {
 import { useNotes } from "@/store";
 
 function Signup() {
-  const { passwordVisibility } = useNotes((state) => state);
+  const { showPassword } = useNotes((state) => state);
   const navigate = useNavigate();
   const { toast } = useToast();
   const form = useForm();
@@ -131,7 +131,7 @@ function Signup() {
                 <FormControl>
                   <div className="relative">
                     <Input
-                      type={passwordVisibility ? "text" : "password"}
+                      type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       {...field}
                     />
