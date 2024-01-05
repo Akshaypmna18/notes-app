@@ -36,7 +36,7 @@ export function SeparatorComponent({ children }) {
 
 export function Section({ children }) {
   return (
-    <section className="p-8 xl:max-w-[80%] xl:mx-auto font-[poppins]">
+    <section className="p-8 sm:max-w-[80%] sm:mx-auto lg:w-[40%] font-[poppins]">
       {children}
     </section>
   );
