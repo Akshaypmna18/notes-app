@@ -6,10 +6,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useNotes } from "@/store";
 
-function DialogModal({ open, children, title, Forms }) {
+function DialogModal({ children, title, Forms }) {
+  const { isDialogModalOpen } = useNotes((state) => state);
   return (
-    <Dialog open={open}>
+    <Dialog open={isDialogModalOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
