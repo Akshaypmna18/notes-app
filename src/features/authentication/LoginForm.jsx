@@ -24,7 +24,6 @@ import {
 } from "../../components/ui/form";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/lib/firebase";
-import firebaseAuthErrors from "@/lib/firebaseErrors";
 import { handleError } from "./functions";
 
 function LoginForm() {
@@ -124,7 +123,7 @@ function LoginForm() {
           <div className="flex items-center">
             <Checkbox
               checked={isChecked}
-              onClick={() => setIsChecked(!isChecked)}
+              onCheckedChange={() => setIsChecked(!isChecked)}
               className="mr-2 data-[state=checked]:bg-primaryColor data-[state=checked]:border-primaryColor"
             />
             <span
