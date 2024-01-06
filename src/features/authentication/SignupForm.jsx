@@ -20,8 +20,8 @@ import firebaseAuthErrors from "@/lib/firebaseErrors";
 import {
   ButtonComponent as Button,
   SeparatorComponent as Separator,
-  EyeIcon,
   Btn,
+  PwdInput,
 } from "@/features/authentication/Components";
 
 function SignupForm() {
@@ -122,17 +122,11 @@ function SignupForm() {
                   <big>Password</big>
                 </FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      {...field}
-                    />
-                    <EyeIcon
-                      onClick={() => setShowPassword(!showPassword)}
-                      showPassword={showPassword}
-                    />
-                  </div>
+                  <PwdInput
+                    field={field}
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                  />
                 </FormControl>
                 <FormDescription>Set a strong password</FormDescription>
                 <FormMessage />

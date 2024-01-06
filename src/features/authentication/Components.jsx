@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import React from "react";
 import { Link } from "react-router-dom";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
@@ -34,42 +35,25 @@ export function SeparatorComponent({ children }) {
   );
 }
 
-export function Section({ children }) {
-  return (
-    <section className="p-8 sm:max-w-[80%] sm:mx-auto md:w-[40%] font-[poppins]">
-      {children}
-    </section>
-  );
-}
-
-export function Header({ isSignup }) {
-  return (
-    <div className="space-y-2 mt-4">
-      <h3 className="text-[calc(1.75rem+1vw)] font-semibold">
-        {isSignup ? "Signup" : "Login"}
-      </h3>
-      <p>
-        Already have an account?
-        <Link
-          to={isSignup ? "/login" : "/signup"}
-          className="underline text-primaryColor ml-2 hover:font-bold"
-        >
-          {isSignup ? "Signup" : "Login"}
-        </Link>
-      </p>
-    </div>
-  );
-}
-
-export function EyeIcon({ onClick, showPassword }) {
+export function PwdInput({ field, showPassword, setShowPassword }) {
   const size = 20;
   return (
-    <span className="cursor-pointer absolute top-3 right-6" onClick={onClick}>
-      {showPassword ? (
-        <IoEyeOutline size={size} />
-      ) : (
-        <IoEyeOffOutline size={size} />
-      )}
-    </span>
+    <div className="relative">
+      <Input
+        type={showPassword ? "text" : "password"}
+        placeholder="Enter your password"
+        {...field}
+      />
+      <span
+        className="cursor-pointer absolute top-3 right-6"
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? (
+          <IoEyeOutline size={size} />
+        ) : (
+          <IoEyeOffOutline size={size} />
+        )}
+      </span>
+    </div>
   );
 }

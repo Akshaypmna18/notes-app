@@ -2,8 +2,8 @@ import React from "react";
 import {
   ButtonComponent as Button,
   SeparatorComponent as Separator,
-  EyeIcon,
   Btn,
+  PwdInput,
 } from "@/features/authentication/Components";
 import { Input } from "../../components/ui/input";
 import { useState } from "react";
@@ -132,17 +132,11 @@ function LoginForm() {
                   </p>
                 </FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      {...field}
-                    />
-                    <EyeIcon
-                      onClick={() => setShowPassword(!showPassword)}
-                      showPassword={showPassword}
-                    />
-                  </div>
+                  <PwdInput
+                    field={field}
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                  />
                 </FormControl>
                 <FormDescription></FormDescription>
                 <FormMessage />
