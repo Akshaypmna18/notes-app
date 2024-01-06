@@ -25,6 +25,7 @@ import {
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/lib/firebase";
 import firebaseAuthErrors from "@/lib/firebaseErrors";
+import { handleError } from "./functions";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -35,55 +36,32 @@ function LoginForm() {
 
   const onLogin = async (data) => {
     const { email, password } = data;
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate("/notes");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage =
-          firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: errorMessage,
-        });
-      });
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/notes");
+    } catch (error) {
+      handleError(error, toast);
+    }
   };
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then(() => {
-        navigate("/notes");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage =
-          firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: errorMessage,
-        });
-      });
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/notes");
+    } catch (error) {
+      handleError(error, toast);
+    }
   };
   const handleTestAccountLogin = async () => {
     const email = "testaccount@mail.com";
     const password = "password";
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate("/notes");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage =
-          firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: errorMessage,
-        });
-      });
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/notes");
+    } catch (error) {
+      handleError(error, toast);
+    }
   };
+
   return (
     <>
       <Toaster />

@@ -16,13 +16,13 @@ import {
 } from "../../components/ui/form";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/lib/firebase";
-import firebaseAuthErrors from "@/lib/firebaseErrors";
 import {
   ButtonComponent as Button,
   SeparatorComponent as Separator,
   Btn,
   PwdInput,
 } from "@/features/authentication/Components";
+import { handleError } from "./functions";
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -32,35 +32,20 @@ function SignupForm() {
 
   const onSubmit = async (data) => {
     const { email, password } = data;
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate("/notes");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = firebaseAuthErrors[errorCode];
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: errorMessage,
-        });
-      });
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/notes");
+    } catch (error) {
+      handleError(error, toast);
+    }
   };
-  const handleGoogleLogin = () => {
-    signInWithPopup(auth, provider)
-      .then(() => {
-        navigate("/notes");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage =
-          firebaseAuthErrors[errorCode] || "An unexpected error occurred.";
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: errorMessage,
-        });
-      });
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/notes");
+    } catch (error) {
+      handleError(error, toast);
+    }
   };
   return (
     <>
