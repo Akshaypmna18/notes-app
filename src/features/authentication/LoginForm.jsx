@@ -124,7 +124,7 @@ function LoginForm() {
                   <big className="font-semibold ">Password</big>
                   <p className="underline">
                     <Link
-                      to="/forgetPassword"
+                      to="/forgot-password"
                       className="underline text-primaryColor"
                     >
                       Forgot Password
