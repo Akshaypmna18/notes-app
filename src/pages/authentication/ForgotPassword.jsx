@@ -63,6 +63,7 @@ function ForgotPassword() {
                   <Input
                     type="email"
                     placeholder="Enter your email"
+                    className="max-w-[20rem]"
                     {...field}
                   />
                 </FormControl>
