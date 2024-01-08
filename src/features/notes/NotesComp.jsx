@@ -34,7 +34,7 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
               )}
             >
               <div
-                className="border p-4 rounded-md max-w-[20rem] m-2 hover:border-primary cursor-pointer inline"
+                className="border p-4 rounded-md max-w-full m-2 hover:border-primary cursor-pointer inline"
                 onClick={() => {
                   setIsDialogModalOpen();
                   setNoteId(noteId);
