@@ -1,6 +1,6 @@
 import React from "react";
 import LoginForm from "@/features/authentication/LoginForm";
-import Page from "@/features/authentication/page";
+import Page from "@/features/authentication/Page";
 
 function Login() {
   return (
