@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import useHandleClickOutside from "@/features/notes/useHandleClickOutside";
+import useHandleClickOutside from "@/features/notes/addNote/useHandleClickOutside";
 import { capitalize } from "@/features/notes/functions";
 import { ref, set, push } from "firebase/database";
 import { db } from "@/lib/firebase";

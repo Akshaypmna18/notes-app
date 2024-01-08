@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth, db } from "../lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { ref, onValue } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/ui/button";
+import { Button } from "@/components/ui/button";
 import Header from "@/layouts/Header";
-import AddNote from "@/features/notes/AddNote";
+import AddNote from "@/features/notes/addNote";
 import NotesComp from "@/features/notes/NotesComp";
 
 function Notes() {

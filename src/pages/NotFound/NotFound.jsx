@@ -1,11 +1,11 @@
 import React from "react";
-import img from "../assets/404.png";
+import img from "@/assets/404.png";
 import { Button } from "@/components/ui/button";
 import { HomeIcon } from "@radix-ui/react-icons";
 import { Link } from "react-router-dom";
 import Theme from "@/features/Theme";
 
-function ErrorPage() {
+function NotFound() {
   return (
     <section className="min-h-[100svh] grid place-items-center">
       <div className="flex justify-center flex-col items-center text-center mb-4 space-y-4 p-4">
@@ -26,4 +26,4 @@ function ErrorPage() {
   );
 }
 
-export default ErrorPage;
+export default NotFound;

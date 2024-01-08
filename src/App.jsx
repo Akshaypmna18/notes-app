@@ -4,7 +4,7 @@ import ForgotPassword from "./pages/authentication/ForgotPassword";
 import Signup from "./pages/authentication/Signup";
 import Notes from "./pages/Notes";
 import Home from "./pages/Home";
-import ErrorPage from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/notes" element={<Notes />} />
-      <Route path="/*" element={<ErrorPage />} />
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 }

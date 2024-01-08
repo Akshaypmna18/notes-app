@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import useWindowSize from "@/features/notes/useWindowSize";
-import CollapsibleForm from "./CollapsibleForm";
+import React from "react";
+import useWindowSize from "@/features/notes/addNote/useWindowSize";
+import CollapsibleForm from "@/features/notes/addNote/CollapsibleForm";
 import DialogModal from "@/components/DialogModal";
 import { Button } from "@/components/ui/button";
-import DialogForm from "./DialogForm";
+import DialogForm from "@/features/notes/DialogForm";
 import { useNotes } from "@/store";
 
 function AddNote({ username, fetchNotes, noteId }) {
