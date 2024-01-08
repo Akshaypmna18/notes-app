@@ -34,7 +34,7 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
               )}
             >
               <div
-                className="border p-4 rounded-md m-2 hover:border-primary cursor-pointer inline"
+                className="border p-4 rounded-md max-w-[20rem] m-2 hover:border-primary cursor-pointer inline"
                 onClick={() => {
                   setIsDialogModalOpen();
                   setNoteId(noteId);
@@ -61,7 +61,7 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
                   </span>
                 </p>
                 <Separator className="mt-2 mb-3" />
-                <p>{note}</p>
+                <p className="break-words">{note}</p>
               </div>
             </DialogModal>
           ))
