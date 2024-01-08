@@ -10,7 +10,7 @@ function AddNote({ username, fetchNotes, noteId }) {
   const { setIsDialogModalOpen } = useNotes((state) => state);
   const screenWidth = useWindowSize();
 
-  return screenWidth > 600 ? (
+  return screenWidth > 640 ? (
     <CollapsibleForm fetchNotes={fetchNotes} username={username} />
   ) : (
     <DialogModal
