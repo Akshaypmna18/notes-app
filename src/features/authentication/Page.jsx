@@ -14,7 +14,7 @@ function Page({ children, isSignup }) {
         </span>
         <span className="mt-2">Hugh Prather</span>
       </section>
-      <section className="p-8 sm:max-w-[80%] sm:mx-auto md:w-[40%] font-[poppins]">
+      <section className="p-4 min-[300px]:p-8 sm:max-w-[80%] sm:mx-auto md:w-[40%] font-[poppins]">
         <CommonHeader />
         <div className="space-y-2 mt-4">
           <h3 className="text-[calc(1.75rem+1vw)] font-semibold">

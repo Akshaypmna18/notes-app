@@ -49,7 +49,7 @@ function Notes() {
   };
 
   return (
-    <section className="space-y-4 p-8 xl:max-w-[80%] xl:mx-auto font-[roboto] relative">
+    <section className="space-y-4 p-4 min-[450px]:p-8 xl:max-w-[80%] xl:mx-auto font-[roboto] relative">
       <Header />
       <AddNote username={username} fetchNotes={fetchNotes} noteId={noteId} />
       <br />
@@ -60,7 +60,7 @@ function Notes() {
         setNoteId={setNoteId}
       />
       <Button
-        className="absolute top-[calc(1rem+0.75vw)] right-[calc(4rem+2vw)]"
+        className="absolute top-[calc(0.1rem+0.75vw)] min-[450px]:top-[calc(1rem+0.75vw)] right-[calc(3rem+2vw)] min-[450px]:right-[calc(4rem+2vw)]"
         onClick={onLogout}
       >
         Logout
