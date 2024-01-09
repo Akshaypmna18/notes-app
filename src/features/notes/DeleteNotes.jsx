@@ -36,7 +36,7 @@ function DeleteNotes({ username, notesId, setNotesId }) {
           </span>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-[640px]:max-w-[15rem]">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -44,7 +44,7 @@ function DeleteNotes({ username, notesId, setNotesId }) {
             from our servers.`}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="flex">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className="bg-red-800 hover:bg-red-800"
