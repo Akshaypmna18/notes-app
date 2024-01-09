@@ -1,6 +1,6 @@
 import React from "react";
 import SignupForm from "@/features/authentication/SignupForm";
-import Page from "@/features/authentication/page";
+import Page from "@/features/authentication/Page";
 
 function Signup() {
   return (
