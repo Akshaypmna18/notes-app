@@ -31,7 +31,7 @@ function DeleteNotes({ username, notesId, setNotesId }) {
           }`}
         >
           <TrashIcon className="min-h-[calc(1.25rem+0.1vw)] min-w-[calc(1.25rem+0.1vw)] cursor-pointer" />
-          <span className="absolute -top-2 -right-1 bg-primary rounded-md w-4 text-red-800 text-[calc(1rem+0.1vw)] ">
+          <span className="absolute -top-2 -right-1 bg-primary rounded-md w-4 text-red-600 text-[calc(1rem+0.1vw)] ">
             {notesId.length}
           </span>
         </Button>
