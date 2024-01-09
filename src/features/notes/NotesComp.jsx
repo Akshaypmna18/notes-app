@@ -60,25 +60,27 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
 
   return (
     <section className="columns-2xs mt-8">
-      <div className="absolute top-16 min-[450px]:top-20 min-[640px]:top-9 left-[50%] translate-x-[-50%]">
-        <span className="absolute top-[0.85rem] left-3">
-          <MagnifyingGlassIcon />
-        </span>
-        <Input
-          placeholder="Search notes..."
-          onChange={handleInputChange}
-          value={filterValue}
-          className="px-8 rounded-full"
-        />
-        <span
-          className={`cursor-pointer absolute top-[0.85rem] right-4 ${
-            filterValue.length > 0 ? "" : "hidden"
-          }`}
-          onClick={() => setFilterValue("")}
-        >
-          <Cross1Icon />
-        </span>
-      </div>
+      {notesArray.length > 0 && (
+        <div className="absolute top-16 min-[450px]:top-20 min-[640px]:top-9 left-[50%] translate-x-[-50%]">
+          <span className="absolute top-[0.85rem] left-3">
+            <MagnifyingGlassIcon />
+          </span>
+          <Input
+            placeholder="Search notes..."
+            onChange={handleInputChange}
+            value={filterValue}
+            className="px-8 rounded-full"
+          />
+          <span
+            className={`cursor-pointer absolute top-[0.85rem] right-4 ${
+              filterValue.length > 0 ? "" : "hidden"
+            }`}
+            onClick={() => setFilterValue("")}
+          >
+            <Cross1Icon />
+          </span>
+        </div>
+      )}
       {filteredNotes.length > 0 &&
         filteredNotes.map(([noteId, { title, note }], index) => (
           <DialogModal
