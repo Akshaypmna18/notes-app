@@ -15,7 +15,7 @@ This project is built with ([Vite React](https://vitejs.dev/guide)).
 ⭐Used :
 
 <ul>
-<!--   <li>Zustand for state management</li> -->
+  <li>Zustand for state management</li>
 <!--   <li>React dnd-kit for drag and drop</li> -->
   <li>Firebase for authentication</li>
   <li>Storybook for testing UI and components</li>
