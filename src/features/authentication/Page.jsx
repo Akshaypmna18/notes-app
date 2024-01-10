@@ -26,7 +26,7 @@ function Page({ children, isSignup }) {
               to={isSignup ? "/login" : "/signup"}
               className="underline text-primaryColor ml-2 hover:font-bold"
             >
-              {isSignup ? "Signup" : "Login"}
+              {isSignup ? "Login":"Signup"  }
             </Link>
           </p>
         </div>
