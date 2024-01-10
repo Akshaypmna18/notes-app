@@ -2,27 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import DialogModal from "@/components/DialogModal";
 import DialogForm from "@/features/notes/DialogForm";
 import { deleteNote } from "@/features/notes/functions";
 import { useNotes } from "@/store";
 import DeleteNotes from "./DeleteNotes";
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import SearchNote from "./SearchNote";
 
 function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
-  const { setIsDialogModalOpen } = useNotes((state) => state);
+  const { setIsDialogModalOpen, filterValue } = useNotes((state) => state);
   const [isChecked, setIsChecked] = useState([]);
   const [notesId, setNotesId] = useState([]);
-  const [filterValue, setFilterValue] = useState("");
+
   const filteredNotes = notesArray.filter((note) =>
     note[1].note.toLowerCase().includes(filterValue.toLowerCase())
   );
-
-  const handleInputChange = (e) => {
-    setFilterValue(e.target.value);
-  };
 
   const handleCheckboxClick = (index, noteId) => {
     setIsChecked((prevChecked) =>
@@ -39,9 +33,8 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
 
   const highlightMatches = (text) => {
     if (filterValue.trim() === "") {
-      return <span>{text}</span>; // No highlighting when filterValue is blank
+      return <span>{text}</span>;
     }
-
     const regex = new RegExp(`(${filterValue})`, "gi");
     return text.split(regex).map((part, index) =>
       regex.test(part) ? (
@@ -60,27 +53,7 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
 
   return (
     <section className="columns-2xs mt-8">
-      {notesArray.length > 0 && (
-        <div className="absolute top-16 min-[450px]:top-20 min-[640px]:top-9 left-[50%] translate-x-[-50%]">
-          <span className="absolute top-[0.85rem] left-3">
-            <MagnifyingGlassIcon />
-          </span>
-          <Input
-            placeholder="Search notes..."
-            onChange={handleInputChange}
-            value={filterValue}
-            className="px-8 rounded-full"
-          />
-          <span
-            className={`cursor-pointer absolute top-[0.85rem] right-4 ${
-              filterValue.length > 0 ? "" : "hidden"
-            }`}
-            onClick={() => setFilterValue("")}
-          >
-            <Cross1Icon />
-          </span>
-        </div>
-      )}
+      {notesArray.length > 0 && <SearchNote />}
       {filteredNotes.length > 0 &&
         filteredNotes.map(([noteId, { title, note }], index) => (
           <DialogModal
