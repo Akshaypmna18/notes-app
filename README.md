@@ -1,8 +1,33 @@
-# React + Vite
+# A Simple Notes App Integrated with Firebase created using ReactJS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is built with ([Vite React](https://vitejs.dev/guide)).
+</br></br>
+⭐It :
 
-Currently, two official plugins are available:
+<ul>
+  <li>is completely responsive</li>
+  <li>supports CRUD operations</li>
+  <li>has both dark and light themes</li>
+  <li>stores data in Firebase Realtime database</li>
+</ul>
+</br>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⭐Used :
+
+<ul>
+  <li>Zustand for state management</li>
+<!--   <li>React dnd-kit for drag and drop</li> -->
+  <li>Firebase for authentication</li>
+  <li>Storybook for testing UI and components</li>
+  <li>Shadcn UI for resusable components</li>
+  <li>Tailwind CSS for styling</li> 
+  <li>Radix UI for icons</li>
+</ul>
+</br>
+
+⭐Demo Link : https://aks-notes-app.vercel.app
+</br>
+
+![Untitled](https://github.com/Akshaypmna18/notes-app/assets/67232475/fd3709ff-c082-4365-b969-0dec3b41bc82)
+
+
