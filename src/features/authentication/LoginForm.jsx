@@ -30,7 +30,7 @@ function LoginForm() {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const form = useForm({ defaultValues: {} });
+  const form = useForm({ defaultValues: { email: "", password: "" } });
   const { toast } = useToast();
 
   const onLogin = async (data) => {

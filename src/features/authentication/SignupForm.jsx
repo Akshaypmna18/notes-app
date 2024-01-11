@@ -27,7 +27,7 @@ import { handleError } from "./functions";
 function SignupForm() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const form = useForm({ defaultValues: {} });
+  const form = useForm({ defaultValues: { email: "", password: "" } });
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {

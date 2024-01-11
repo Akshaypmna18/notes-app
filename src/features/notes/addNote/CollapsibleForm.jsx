@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 function CollapsibleForm({ fetchNotes, username }) {
-  const largeForm = useForm({ defaultValues: {} });
+  const largeForm = useForm({ defaultValues: { title: "", note: "" } });
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
 
   const formRef = useRef();

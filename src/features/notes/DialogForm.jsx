@@ -25,7 +25,7 @@ export default function Forms({
   fetchNotes,
 }) {
   const { setIsDialogModalOpen } = useNotes((state) => state);
-  const smallForm = useForm({ defaultValues });
+  const smallForm = useForm({ defaultValues: { title: "", note: "" } });
   const onSubmit = ({ title, note }) => {
     if (isUpdate) {
       if (title) {
