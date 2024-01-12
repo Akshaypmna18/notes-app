@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
@@ -24,8 +24,15 @@ export default function Forms({
   noteId,
   fetchNotes,
 }) {
+  // const textareaRef = useRef();
+  // const [value, setValue] = useState("");
+  // useEffect(() => {
+  //   textareaRef.current.style.height = "auto";
+  //   textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+  //   textareaRef.current.style.maxHeight = "90svh";
+  // }, [value]);
   const { setIsDialogModalOpen } = useNotes((state) => state);
-  const smallForm = useForm({ defaultValues: { title: "", note: "" } });
+  const smallForm = useForm({ defaultValues });
   const onSubmit = ({ title, note }) => {
     if (isUpdate) {
       if (title) {
@@ -77,7 +84,13 @@ export default function Forms({
             <FormItem>
               <FormLabel>Note</FormLabel>
               <FormControl>
-                <Textarea placeholder="Add note here..." {...field} />
+                <Textarea
+                  // value={value}
+                  // onChange={(e) => setValue(e.target.value)}
+                  // ref={textareaRef}
+                  placeholder="Add note here..."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -17,6 +17,7 @@ function AddNote({ username, fetchNotes, noteId }) {
       title="Add new note"
       Forms={() => (
         <DialogForm
+          defaultValues={{ title: "", note: "" }}
           isUpdate={false}
           username={username}
           noteId={noteId}
