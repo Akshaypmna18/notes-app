@@ -19,7 +19,8 @@ export default function Home() {
   return (
     <section className="grid place-items-center min-h-[100svh] p-8">
       <h1 className="text-[calc(2rem+1vw)] text-center  font-[lobster] text-primaryColor">
-        Hello Welcome to <span className="font-dancingScript">Aks Notes</span>{" "}
+        Hello Welcome to{" "}
+        <span className="font-dancingScript whitespace-nowrap">Aks Notes</span>{" "}
         <Theme className={"hidden"} />
       </h1>
     </section>
