@@ -13,8 +13,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import useHandleClickOutside from "@/features/notes/addNote/useHandleClickOutside";
-import { capitalize } from "@/features/notes/functions";
+import useHandleClickOutside from "@/features/notes/useHandleClickOutside";
+import { capitalize } from "@/features/notes/utils";
 import { ref, set, push } from "firebase/database";
 import { db } from "@/lib/firebase";
 import { Input } from "@/components/ui/input";
@@ -53,7 +53,7 @@ function CollapsibleForm({ fetchNotes, username }) {
       <Form {...largeForm}>
         <form
           onSubmit={largeForm.handleSubmit(addNote)}
-          className="space-y-4 w-[20rem] mx-auto"
+          className="space-y-4 w-[20rem] mx-auto mt-4"
           ref={formRef}
         >
           <FormField

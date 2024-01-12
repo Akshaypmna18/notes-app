@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { capitalize } from "@/features/notes/functions";
+import { capitalize } from "@/features/notes/utils";
 import { useNotes } from "@/store";
 
 export default function Forms({
@@ -24,12 +24,15 @@ export default function Forms({
   noteId,
   fetchNotes,
 }) {
-  // const textareaRef = useRef();
+  // const textareaRef = useRef(null);
   // const [value, setValue] = useState("");
   // useEffect(() => {
-  //   textareaRef.current.style.height = "auto";
-  //   textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
-  //   textareaRef.current.style.maxHeight = "90svh";
+  //   if (textareaRef.current) {
+  //     textareaRef.current.style.height = "auto";
+  //     textareaRef.current.style.minHeight =
+  //       textareaRef.current.scrollHeight + "px";
+  //     textareaRef.current.style.maxHeight = "50svh";
+  //   }
   // }, [value]);
   const { setIsDialogModalOpen } = useNotes((state) => state);
   const smallForm = useForm({ defaultValues });

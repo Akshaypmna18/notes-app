@@ -22,7 +22,7 @@ import {
   Btn,
   PwdInput,
 } from "@/features/authentication/Components";
-import { handleError } from "./functions";
+import { handleError } from "./utils";
 
 function SignupForm() {
   const navigate = useNavigate();

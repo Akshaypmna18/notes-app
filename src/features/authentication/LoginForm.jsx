@@ -24,7 +24,7 @@ import {
 } from "../../components/ui/form";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/lib/firebase";
-import { handleError } from "./functions";
+import { handleError } from "./utils";
 
 function LoginForm() {
   const navigate = useNavigate();
