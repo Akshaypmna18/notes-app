@@ -7,20 +7,18 @@ import { Button } from "@/components/ui/button";
 import Header from "@/layouts/Header";
 import AddNote from "@/features/notes/addNote";
 import NotesComp from "@/features/notes/NotesComp";
+import SearchNote from "@/features/notes/SearchNote";
 
 function Notes() {
-  const [uid, setUid] = useState(""),
-    [username, setUsername] = useState(""),
-    [notes, setNotes] = useState([]),
-    [notesArray, setNotesArray] = useState([]),
-    [noteId, setNoteId] = useState("");
+  const [username, setUsername] = useState("");
+  const [notes, setNotes] = useState([]);
+  const [notesArray, setNotesArray] = useState([]);
+  const [noteId, setNoteId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        setUid(uid);
         setUsername(auth.currentUser.email.replace(/[^a-zA-Z0-9]/g, ""));
         fetchNotes();
       }
@@ -50,21 +48,23 @@ function Notes() {
 
   return (
     <main className="space-y-4 p-4 min-[450px]:p-8 xl:max-w-[80%] xl:mx-auto font-[roboto] relative">
-      <Header />
-      <AddNote username={username} fetchNotes={fetchNotes} noteId={noteId} />
-      <br />
+      <header>
+        <Header />
+        <AddNote username={username} fetchNotes={fetchNotes} noteId={noteId} />
+        <Button
+          className="absolute top-[calc(1rem+0.75vw)] min-[450px]:top-[calc(2rem+0.75vw)] right-[calc(3rem+2vw)] min-[450px]:right-[calc(4rem+2vw)]"
+          onClick={onLogout}
+        >
+          Logout
+        </Button>
+        {notesArray.length > 0 && <SearchNote />}
+      </header>
       <NotesComp
         notesArray={notesArray}
         username={username}
         fetchNotes={fetchNotes}
         setNoteId={setNoteId}
       />
-      <Button
-        className="absolute top-[calc(0.1rem+0.75vw)] min-[450px]:top-[calc(1rem+0.75vw)] right-[calc(3rem+2vw)] min-[450px]:right-[calc(4rem+2vw)]"
-        onClick={onLogout}
-      >
-        Logout
-      </Button>
     </main>
   );
 }
