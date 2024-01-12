@@ -20,7 +20,7 @@ import { db } from "@/lib/firebase";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-function CollapsibleForm({ fetchNotes, username }) {
+function CollapsibleForm({ fetchNotes, username, notesArray }) {
   const largeForm = useForm({ defaultValues: { title: "", note: "" } });
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
 
@@ -53,7 +53,11 @@ function CollapsibleForm({ fetchNotes, username }) {
       <Form {...largeForm}>
         <form
           onSubmit={largeForm.handleSubmit(addNote)}
-          className="space-y-4 w-[20rem] mx-auto mt-4"
+          className={`${
+            notesArray.length === 0
+              ? "absolute top-[calc(0.9rem+1vw)] left-[50%] translate-x-[-50%]"
+              : ""
+          } space-y-4 w-[20rem] mx-auto mt-4`}
           ref={formRef}
         >
           <FormField
