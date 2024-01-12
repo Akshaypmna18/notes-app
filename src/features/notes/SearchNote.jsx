@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
@@ -7,10 +7,6 @@ import { useNotes } from "@/store";
 function SearchNote() {
   const { filterValue, setFilterValue } = useNotes((state) => state);
 
-  const handleInputChange = (e) => {
-    setFilterValue(e.target.value);
-  };
-
   return (
     <div className="absolute top-16 min-[450px]:top-20 min-[640px]:top-9 left-[50%] translate-x-[-50%]">
       <span className="absolute top-[0.85rem] left-3">
@@ -18,7 +14,7 @@ function SearchNote() {
       </span>
       <Input
         placeholder="Search notes..."
-        onChange={handleInputChange}
+        onChange={(e) => setFilterValue(e.target.value)}
         value={filterValue}
         className="px-8 rounded-full"
       />
