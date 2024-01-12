@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Separator } from "@/components/ui/separator";
-import { TrashIcon } from "@radix-ui/react-icons";
 import { Checkbox } from "@/components/ui/checkbox";
-import DialogModal from "@/components/DialogModal";
-import DialogForm from "@/features/notes/DialogForm";
-import { deleteNote } from "@/features/notes/functions";
+import DialogModal from "@/features/notes/components/DialogModal";
+import DialogForm from "@/features/notes/components/DialogForm";
 import { useNotes } from "@/store";
-import DeleteNotes from "./DeleteNotes";
-import SearchNote from "./SearchNote";
+import DeleteSingleNote from "./deleteNotes/singleNote";
+import DeleteMultipleNotes from "./deleteNotes/multipleNotes";
+// import useClickOutside from "./useHandleClickOutside";
 
 function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
   const { setIsDialogModalOpen, filterValue } = useNotes((state) => state);
@@ -47,13 +46,28 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
     );
   };
 
+  // const checkboxRefs = useRef(
+  //   Array(notesArray.length)
+  //     .fill(null)
+  //     .map(() => React.createRef())
+  // );
+
+  // const handleClickOutside = () => {
+  //   setIsChecked(Array(notesArray.length).fill(false));
+  // };
+
+  // useEffect(() => {
+  //   setIsChecked(Array(notesArray.length).fill(false));
+  // }, [notesArray]);
+
+  // useClickOutside(checkboxRefs, handleClickOutside);
+
   useEffect(() => {
     setIsChecked(Array(notesArray.length).fill(false));
   }, [notesArray]);
 
   return (
-    <section className="columns-2xs mt-8">
-      {notesArray.length > 0 && <SearchNote />}
+    <section className="columns-2xs max-[640px]:pt-7">
       {filteredNotes.length > 0 &&
         filteredNotes.map(([noteId, { title, note }], index) => (
           <DialogModal
@@ -70,7 +84,7 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
             )}
           >
             <div
-              className="border p-4 rounded-md max-w-full m-2 max-[640px]:mt-6 hover:border-primary cursor-pointer inline"
+              className="border p-4 rounded-md max-w-full m-2 max-h-[70svh] overflow-hidden max-[640px]:mt-6 hover:border-primary cursor-pointer inline"
               onClick={() => {
                 setIsDialogModalOpen();
                 setNoteId(noteId);
@@ -80,28 +94,25 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
                 <Checkbox
                   className="min-h-[calc(0.5rem+0.5vw)] min-w-[calc(0.5rem+0.5vw)] cursor-pointer              hover:border-primaryColor"
                   checked={isChecked[index]}
+                  // ref={checkboxRefs.current[index]}
                   onClick={(e) => {
                     e.preventDefault();
                     handleCheckboxClick(index, noteId);
                   }}
                 />
                 <big className="mx-4">{title}</big>
-                <span>
-                  <TrashIcon
-                    className="min-h-[calc(1.25rem+0.1vw)] min-w-[calc(1.25rem+0.1vw)]  cursor-pointer              hover:text-red-800"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deleteNote(noteId, username);
-                    }}
-                  />
-                </span>
+                <DeleteSingleNote
+                  username={username}
+                  noteId={noteId}
+                  onClick={(e) => e.preventDefault()}
+                />
               </p>
               <Separator className="mt-2 mb-3" />
               <p className="break-words">{highlightMatches(note)}</p>
             </div>
           </DialogModal>
         ))}
-      <DeleteNotes
+      <DeleteMultipleNotes
         username={username}
         notesId={notesId}
         setNotesId={setNotesId}

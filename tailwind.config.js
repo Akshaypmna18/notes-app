@@ -21,6 +21,7 @@ module.exports = {
       },
       colors: {
         primaryColor: "#0077b5",
+        deleteIcon: "#7F1D1D",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

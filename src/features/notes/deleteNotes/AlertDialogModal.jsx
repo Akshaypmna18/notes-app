@@ -26,10 +26,8 @@ function AlertDialogModal({ func, children, desc }) {
         <AlertDialogFooter className="flex">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            className="bg-red-800 hover:bg-red-800"
-            onClick={() => {
-              func;
-            }}
+            className="bg-deleteIcon opacity-90 hover:bg-deleteIcon hover:opacity-100"
+            onClick={() => func()}
           >
             Continue
           </AlertDialogAction>
