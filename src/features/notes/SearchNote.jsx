@@ -8,7 +8,7 @@ function SearchNote() {
   const { filterValue, setFilterValue } = useNotes((state) => state);
 
   return (
-    <div className="absolute top-16 min-[450px]:top-20 min-[640px]:top-9 left-[50%] translate-x-[-50%]">
+    <div className="absolute top-16 min-[450px]:top-20 min-[640px]:top-11 left-[50%] translate-x-[-50%]">
       <span className="absolute top-[0.85rem] left-3">
         <MagnifyingGlassIcon />
       </span>
