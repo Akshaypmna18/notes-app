@@ -6,7 +6,6 @@ import DialogForm from "@/features/notes/components/DialogForm";
 import { useNotes } from "@/store";
 import DeleteSingleNote from "./deleteNotes/singleNote";
 import DeleteMultipleNotes from "./deleteNotes/multipleNotes";
-// import useClickOutside from "./useHandleClickOutside";
 
 function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
   const { setIsDialogModalOpen, filterValue } = useNotes((state) => state);
@@ -46,24 +45,9 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
     );
   };
 
-  // const checkboxRefs = useRef(
-  //   Array(notesArray.length)
-  //     .fill(null)
-  //     .map(() => React.createRef())
-  // );
-
-  // const handleClickOutside = () => {
-  //   setIsChecked(Array(notesArray.length).fill(false));
-  // };
-
-  // useEffect(() => {
-  //   setIsChecked(Array(notesArray.length).fill(false));
-  // }, [notesArray]);
-
-  // useClickOutside(checkboxRefs, handleClickOutside);
-
   useEffect(() => {
     setIsChecked(Array(notesArray.length).fill(false));
+    setNotesId([]);
   }, [notesArray]);
 
   return (
@@ -94,7 +78,6 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
                 <Checkbox
                   className="min-h-[calc(0.5rem+0.5vw)] min-w-[calc(0.5rem+0.5vw)] cursor-pointer              hover:border-primaryColor"
                   checked={isChecked[index]}
-                  // ref={checkboxRefs.current[index]}
                   onClick={(e) => {
                     e.preventDefault();
                     handleCheckboxClick(index, noteId);
