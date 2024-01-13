@@ -48,7 +48,7 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
   useEffect(() => {
     setIsChecked(Array(notesArray.length).fill(false));
     setNotesId([]);
-  }, [notesArray]);
+  }, [notesArray, filterValue]);
 
   return (
     <section className="columns-2xs max-[640px]:pt-7">
