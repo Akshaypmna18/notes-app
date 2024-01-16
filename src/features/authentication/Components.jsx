@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import React from "react";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 export function ButtonComponent({ children, onClick, className }) {
@@ -10,14 +9,6 @@ export function ButtonComponent({ children, onClick, className }) {
       className={`bg-secondary border-2 text-primaryColor hover:bg-secondary border-primaryColor hover:text-primary ${className}`}
       onClick={onClick}
     >
-      {children}
-    </Button>
-  );
-}
-
-export function Btn({ children, type }) {
-  return (
-    <Button className="w-full" type={type}>
       {children}
     </Button>
   );
@@ -34,13 +25,20 @@ export function SeparatorComponent({ children }) {
   );
 }
 
-export function PwdInput({ field, showPassword, setShowPassword }) {
+export function PwdInput({
+  field,
+  showPassword,
+  setShowPassword,
+  isConfirmPassword,
+}) {
   const size = 20;
   return (
     <div className="relative">
       <Input
         type={showPassword ? "text" : "password"}
-        placeholder="Enter your password"
+        placeholder={
+          isConfirmPassword ? "Re-enter your password" : "Enter your password"
+        }
         {...field}
       />
       <span
