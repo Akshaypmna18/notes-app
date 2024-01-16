@@ -1,14 +1,35 @@
 import { create } from "zustand";
+import { onValue, ref } from "firebase/database";
+import { db } from "./lib/firebase";
+
+const fetchNotes = (set) => {
+  onValue(ref(db, `/notes/`), (snapshot) => {
+    set(() => ({ notes: snapshot.val() }));
+  });
+};
 
 const notes = (set) => ({
   isDialogModalOpen: false,
-  setIsDialogModalOpen: (value) => {
-    set(() => ({ isDialogModalOpen: value }));
-  },
+  setIsDialogModalOpen: (isDialogModalOpen) => set({ isDialogModalOpen }),
+
   filterValue: "",
-  setFilterValue: (value) => {
-    set(() => ({ filterValue: value }));
-  },
+  setFilterValue: (filterValue) => set({ filterValue }),
+
+  username: "",
+  setUsername: (username) => set({ username }),
+
+  // notesArray: [],
+  // setNotesArray: (note) =>
+  //   set((state) => ({ notesArray: [...state.notesArray, note] })),
+
+  noteId: "",
+  setNoteId: (noteId) => set({ noteId }),
+
+  notes: [],
+  fetchNotes: () => fetchNotes(set),
+
+  user: false,
+  setUser: (user) => set({ user }),
 });
 
 export const useNotes = create(notes);
