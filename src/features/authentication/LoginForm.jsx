@@ -1,16 +1,14 @@
-import React from "react";
 import {
-  ButtonComponent as Button,
+  ButtonComponent as Btn,
   SeparatorComponent as Separator,
-  Btn,
   PwdInput,
 } from "@/features/authentication/Components";
-import { Input } from "../../components/ui/input";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Checkbox } from "../../components/ui/checkbox";
-import { useToast } from "../../components/ui/use-toast";
-import { Toaster } from "../../components/ui/toaster";
-import { Link, useNavigate } from "react-router-dom";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Toaster } from "@/components/ui/toaster";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -21,51 +19,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, provider } from "@/lib/firebase";
-import { handleError } from "./utils";
+} from "@/components/ui/form";
+import useAuth from "./useAuth";
 
 function LoginForm() {
-  const navigate = useNavigate();
+  const { handleLogin, handleGoogleLogin, handleTestAccountLogin } = useAuth();
+
+  const defaultValues = { email: "", password: "" };
+  const form = useForm({ defaultValues });
+
   const [isChecked, setIsChecked] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const form = useForm({ defaultValues: { email: "", password: "" } });
-  const { toast } = useToast();
-
-  const onLogin = async (data) => {
-    const { email, password } = data;
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/notes");
-    } catch (error) {
-      handleError(error, toast);
-    }
-  };
-  const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      navigate("/notes");
-    } catch (error) {
-      handleError(error, toast);
-    }
-  };
-  const handleTestAccountLogin = async () => {
-    const email = "testaccount@mail.com";
-    const password = "password";
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/notes");
-    } catch (error) {
-      handleError(error, toast);
-    }
-  };
 
   return (
     <>
       <Toaster />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onLogin)} className="space-y-4 mt-6">
+        <form
+          onSubmit={form.handleSubmit(handleLogin)}
+          className="space-y-4 mt-6"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -133,16 +106,18 @@ function LoginForm() {
               Remember me?
             </span>
           </div>
-          <Btn type="submit">Login</Btn>
+          <Button className="w-full" type="submit">
+            Login
+          </Button>
         </form>
       </Form>
       <Separator>Or Log in with</Separator>
       <div className="flex flex-wrap justify-center gap-x-4 mt-8 gap-y-2">
-        <Button onClick={handleGoogleLogin}>
+        <Btn onClick={handleGoogleLogin}>
           <FcGoogle className="mr-2" />
           Google
-        </Button>
-        <Button onClick={handleTestAccountLogin}>Guest account</Button>
+        </Btn>
+        <Btn onClick={handleTestAccountLogin}>Guest account</Btn>
       </div>
     </>
   );

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Input } from "../../components/ui/input";
-import { useToast } from "../../components/ui/use-toast";
-import { Toaster } from "../../components/ui/toaster";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -13,45 +12,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, provider } from "@/lib/firebase";
+} from "@/components/ui/form";
 import {
-  ButtonComponent as Button,
+  ButtonComponent as Btn,
   SeparatorComponent as Separator,
-  Btn,
   PwdInput,
 } from "@/features/authentication/Components";
-import { handleError } from "./utils";
+import useAuth from "./useAuth";
 
 function SignupForm() {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const form = useForm({ defaultValues: { email: "", password: "" } });
+  const { handleSignup, handleGoogleSignup } = useAuth();
+
+  const defaultValues = { email: "", password: "", confirmPassword: "" };
+  const form = useForm({ defaultValues });
+  const password = form.watch("password");
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data) => {
-    const { email, password } = data;
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/notes");
-    } catch (error) {
-      handleError(error, toast);
-    }
-  };
-  const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      navigate("/notes");
-    } catch (error) {
-      handleError(error, toast);
-    }
-  };
   return (
     <>
       <Toaster />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-6">
+        <form
+          onSubmit={form.handleSubmit(handleSignup)}
+          className="space-y-4 mt-6"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -118,14 +103,42 @@ function SignupForm() {
               </FormItem>
             )}
           />
-          <Btn type="submit">Signup</Btn>
+          {password && (
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              rules={{
+                required: { value: true, message: "This is required*" },
+                validate: (val) => val === password || "Passwords do not match",
+              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-semibold">
+                    <big>Confirm Password</big>
+                  </FormLabel>
+                  <FormControl>
+                    <PwdInput
+                      field={field}
+                      showPassword={showPassword}
+                      setShowPassword={setShowPassword}
+                      isConfirmPassword={true}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          <Button className="w-full" type="submit">
+            Signup
+          </Button>
         </form>
       </Form>
       <Separator>Or Sign up with</Separator>
-      <Button className="flex mx-auto mt-8" onClick={handleGoogleLogin}>
+      <Btn className="flex mx-auto mt-8" onClick={handleGoogleSignup}>
         <FcGoogle className="mr-2" />
         Google
-      </Button>
+      </Btn>
     </>
   );
 }
