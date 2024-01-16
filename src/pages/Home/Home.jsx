@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
@@ -8,13 +8,15 @@ export default function Home() {
   let timerRef = useRef(null);
   const navigate = useNavigate();
 
-  const timer = setTimeout(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) navigate("/notes");
-      else navigate("/login");
-    });
-  }, 3000);
-  timerRef.current = timer;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) navigate("/notes");
+        else navigate("/login");
+      });
+    }, 3000);
+    timerRef.current = timer;
+  }, []);
 
   return (
     <section className="grid place-items-center min-h-[100svh] p-8">

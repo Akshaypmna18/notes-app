@@ -1,4 +1,3 @@
-import React from "react";
 import SignupForm from "@/features/authentication/SignupForm";
 import Page from "@/features/authentication/Page";
 

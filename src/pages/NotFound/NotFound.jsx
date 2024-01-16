@@ -1,4 +1,3 @@
-import React from "react";
 import img from "@/assets/404.png";
 import { Button } from "@/components/ui/button";
 import { HomeIcon } from "@radix-ui/react-icons";
