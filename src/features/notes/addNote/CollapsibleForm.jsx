@@ -13,36 +13,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import useHandleClickOutside from "@/features/notes/useHandleClickOutside";
-import { capitalize } from "@/features/notes/utils";
-import { ref, set, push } from "firebase/database";
-import { db } from "@/lib/firebase";
+import useHandleClickOutside from "@/features/notes/hooks/useHandleClickOutside";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useNotes } from "@/store";
+import { newNote } from "./utils";
 
-function CollapsibleForm({ fetchNotes, username, notesArray }) {
+function CollapsibleForm({ notesArray }) {
+  const { username, fetchNotes } = useNotes((state) => state);
   const largeForm = useForm({ defaultValues: { title: "", note: "" } });
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
 
   const formRef = useRef();
-  const handleClickOutside = () => {
-    setIsCollapsibleOpen(false);
+  const formReset = () => {
     largeForm.setValue("title", "");
     largeForm.setValue("note", "");
+    setIsCollapsibleOpen(false);
   };
-  useHandleClickOutside(formRef, handleClickOutside);
+  useHandleClickOutside(formRef, formReset);
 
   const addNote = ({ title, note }) => {
-    const userNotesRef = ref(db, `/notes/${username}/`);
-    const newNoteRef = push(userNotesRef);
-    set(newNoteRef, {
-      title: capitalize(title) || "",
-      note: capitalize(note),
-    });
-    fetchNotes();
-    largeForm.setValue("title", "");
-    largeForm.setValue("note", "");
-    setIsCollapsibleOpen(false);
+    newNote(username, title, note, fetchNotes);
+    formReset();
   };
 
   return (

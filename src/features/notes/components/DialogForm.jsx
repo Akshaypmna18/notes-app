@@ -16,14 +16,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { capitalize } from "@/features/notes/utils";
 import { useNotes } from "@/store";
+import { newNote } from "../addNote/utils";
 
-export default function Forms({
-  defaultValues = {},
-  isUpdate = false,
-  username,
-  noteId,
-  fetchNotes,
-}) {
+export default function Forms({ defaultValues = {}, isUpdate = false }) {
   // const textareaRef = useRef(null);
   // const [value, setValue] = useState("");
   // useEffect(() => {
@@ -34,7 +29,9 @@ export default function Forms({
   //     textareaRef.current.style.maxHeight = "50svh";
   //   }
   // }, [value]);
-  const { setIsDialogModalOpen } = useNotes((state) => state);
+  const { setIsDialogModalOpen, username, fetchNotes, noteId } = useNotes(
+    (state) => state
+  );
   const smallForm = useForm({ defaultValues });
   const onSubmit = ({ title, note }) => {
     if (isUpdate) {
@@ -49,13 +46,7 @@ export default function Forms({
         });
       }
     } else {
-      const userNotesRef = ref(db, `/notes/${username}/`);
-      const newNoteRef = push(userNotesRef);
-      set(newNoteRef, {
-        title: capitalize(title) || "",
-        note: capitalize(note),
-      });
-      fetchNotes();
+      newNote(username, title, note, fetchNotes);
     }
     setIsDialogModalOpen(false);
   };

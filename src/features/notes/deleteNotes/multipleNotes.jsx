@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import AlertDialogModal from "./AlertDialogModal";
 import { deleteNote } from "../utils";
+import { useNotes } from "@/store";
 
-function DeleteMultipleNotes({ username, notesId, setNotesId }) {
+function DeleteMultipleNotes({ notesId, setNotesId }) {
+  const { username } = useNotes((state) => state);
   const deleteMultipleNotes = (username, noteIds) => {
     noteIds.forEach((noteId) => {
       deleteNote(username, noteId);

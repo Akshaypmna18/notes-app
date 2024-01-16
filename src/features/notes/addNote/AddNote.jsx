@@ -6,27 +6,17 @@ import { Button } from "@/components/ui/button";
 import DialogForm from "@/features/notes/components/DialogForm";
 import { useNotes } from "@/store";
 
-function AddNote({ username, fetchNotes, noteId, notesArray }) {
+function AddNote({ notesArray }) {
   const { setIsDialogModalOpen } = useNotes((state) => state);
   const screenWidth = useWindowSize();
 
   return screenWidth > 640 ? (
-    <CollapsibleForm
-      fetchNotes={fetchNotes}
-      username={username}
-      notesArray={notesArray}
-    />
+    <CollapsibleForm notesArray={notesArray} />
   ) : (
     <DialogModal
       title="Add new note"
       Forms={() => (
-        <DialogForm
-          defaultValues={{ title: "", note: "" }}
-          isUpdate={false}
-          username={username}
-          noteId={noteId}
-          fetchNotes={fetchNotes}
-        />
+        <DialogForm defaultValues={{ title: "", note: "" }} isUpdate={false} />
       )}
     >
       <Button

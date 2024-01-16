@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import DialogModal from "@/features/notes/components/DialogModal";
@@ -7,13 +7,15 @@ import { useNotes } from "@/store";
 import DeleteSingleNote from "./deleteNotes/singleNote";
 import DeleteMultipleNotes from "./deleteNotes/multipleNotes";
 
-function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
-  const { setIsDialogModalOpen, filterValue } = useNotes((state) => state);
+function NotesComp({ notesArray }) {
+  const { setIsDialogModalOpen, filterValue, setNoteId } = useNotes(
+    (state) => state
+  );
   const [isChecked, setIsChecked] = useState([]);
   const [notesId, setNotesId] = useState([]);
 
-  const filteredNotes = notesArray.filter((note) =>
-    note[1].note.toLowerCase().includes(filterValue.toLowerCase())
+  const filteredNotes = notesArray.filter((item) =>
+    item[1].note.toLowerCase().includes(filterValue.toLowerCase())
   );
 
   const handleCheckboxClick = (index, noteId) => {
@@ -61,9 +63,6 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
               <DialogForm
                 defaultValues={{ title: title, note: note }}
                 isUpdate={true}
-                username={username}
-                noteId={noteId}
-                fetchNotes={fetchNotes}
               />
             )}
           >
@@ -84,22 +83,14 @@ function NotesComp({ notesArray, username, fetchNotes, setNoteId }) {
                   }}
                 />
                 <big className="mx-4">{title}</big>
-                <DeleteSingleNote
-                  username={username}
-                  noteId={noteId}
-                  onClick={(e) => e.preventDefault()}
-                />
+                <DeleteSingleNote />
               </p>
               <Separator className="mt-2 mb-3" />
               <p className="break-words">{highlightMatches(note)}</p>
             </div>
           </DialogModal>
         ))}
-      <DeleteMultipleNotes
-        username={username}
-        notesId={notesId}
-        setNotesId={setNotesId}
-      />
+      <DeleteMultipleNotes notesId={notesId} setNotesId={setNotesId} />
     </section>
   );
 }
