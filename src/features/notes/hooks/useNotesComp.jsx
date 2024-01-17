@@ -48,6 +48,7 @@ const useNotesComp = (notesArray) => {
 
   return {
     setIsDialogModalOpen,
+    setNotesId,
     setNoteId,
     notesId,
     filteredNotes,
