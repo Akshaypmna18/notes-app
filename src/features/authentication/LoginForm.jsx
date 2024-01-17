@@ -20,10 +20,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import useAuth from "./useAuth";
+import useAuthFunctions from "./useAuthFunctions";
 
 function LoginForm() {
-  const { handleLogin, handleGoogleLogin, handleTestAccountLogin } = useAuth();
+  const { handleLogin, handleGoogleLogin, handleTestAccountLogin } =
+    useAuthFunctions();
 
   const defaultValues = { email: "", password: "" };
   const form = useForm({ defaultValues });

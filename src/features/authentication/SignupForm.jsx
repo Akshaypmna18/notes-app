@@ -18,10 +18,10 @@ import {
   SeparatorComponent as Separator,
   PwdInput,
 } from "@/features/authentication/Components";
-import useAuth from "./useAuth";
+import useAuthFunctions from "./useAuthFunctions";
 
 function SignupForm() {
-  const { handleSignup, handleGoogleSignup } = useAuth();
+  const { handleSignup, handleGoogleSignup } = useAuthFunctions();
 
   const defaultValues = { email: "", password: "", confirmPassword: "" };
   const form = useForm({ defaultValues });
