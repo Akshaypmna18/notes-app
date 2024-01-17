@@ -14,7 +14,9 @@ function DialogModal({ children, title, Forms }) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         className="sm:max-w-[425px]"
-        onOpenAutoFocus={(e) => e.preventDefault()}
+        onOpenAutoFocus={(e) => {
+          if (title === "Update note") e.preventDefault();
+        }}
       >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
