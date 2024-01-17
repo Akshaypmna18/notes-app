@@ -1,6 +1,5 @@
 import { db } from "@/lib/firebase";
 import { push, ref, set } from "firebase/database";
-import React from "react";
 import { capitalize } from "../utils";
 
 export function newNote(username, title, note, fetchNotes) {

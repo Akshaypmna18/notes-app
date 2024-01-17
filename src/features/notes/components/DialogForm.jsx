@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { db } from "@/lib/firebase";
-import { ref, set, push, update } from "firebase/database";
+import { ref, update } from "firebase/database";
 import {
   Form,
   FormControl,

@@ -1,4 +1,3 @@
-import React from "react";
 import AlertDialogModal from "./AlertDialogModal";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { deleteNote } from "../utils";

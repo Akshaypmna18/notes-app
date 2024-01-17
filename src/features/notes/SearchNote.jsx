@@ -1,4 +1,3 @@
-import React from "react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";

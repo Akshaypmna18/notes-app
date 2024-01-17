@@ -1,4 +1,3 @@
-import React from "react";
 import useWindowSize from "@/features/notes/addNote/useWindowSize";
 import CollapsibleForm from "@/features/notes/addNote/CollapsibleForm";
 import DialogModal from "@/features/notes/components/DialogModal";
