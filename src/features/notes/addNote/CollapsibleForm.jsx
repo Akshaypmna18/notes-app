@@ -17,10 +17,11 @@ import useHandleClickOutside from "@/features/notes/hooks/useHandleClickOutside"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNotes } from "@/store";
-import { newNote } from "./utils";
+import useNotesUtils from "@/features/notes/hooks/useNotesUtils";
 
 function CollapsibleForm({ notesArray }) {
-  const { username, fetchNotes } = useNotes((state) => state);
+  const { fetchNotes } = useNotes((state) => state);
+  const { newNote } = useNotesUtils();
   const largeForm = useForm({ defaultValues: { title: "", note: "" } });
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
 
@@ -33,7 +34,7 @@ function CollapsibleForm({ notesArray }) {
   useHandleClickOutside(formRef, formReset);
 
   const addNote = ({ title, note }) => {
-    newNote(username, title, note, fetchNotes);
+    newNote(title, note, fetchNotes);
     formReset();
   };
 

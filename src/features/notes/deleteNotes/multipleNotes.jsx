@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import AlertDialogModal from "./AlertDialogModal";
-import { deleteNote } from "../utils";
-import { useNotes } from "@/store";
+import useNotesUtils from "../hooks/useNotesUtils";
 
 function DeleteMultipleNotes({ notesId, setNotesId }) {
-  const { username } = useNotes((state) => state);
-  const deleteMultipleNotes = (username, noteIds) => {
+  const { deleteNote } = useNotesUtils();
+  const deleteMultipleNotes = (noteIds) => {
     noteIds.forEach((noteId) => {
-      deleteNote(username, noteId);
+      deleteNote(noteId);
     });
     setNotesId([]);
   };
@@ -17,7 +16,7 @@ function DeleteMultipleNotes({ notesId, setNotesId }) {
       desc={`${notesId.length > 1 ? notesId.length : "this"} ${
         notesId.length > 1 ? "notes" : "note"
       }`}
-      func={() => deleteMultipleNotes(username, notesId)}
+      func={() => deleteMultipleNotes(notesId)}
     >
       <Button
         className={`bg-deleteIcon hover:bg-deleteIcon fixed sm:absolute right-8 bottom-12 rounded-lg h-[calc(2.5rem+1vw)] w-[calc(2.5rem+1vw) sm:top-[calc(1.8rem+0.75vw)] sm:right-[calc(10rem+2vw)] sm:w-12 sm:h-10 ${

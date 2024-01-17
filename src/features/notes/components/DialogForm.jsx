@@ -13,9 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { capitalize } from "@/features/notes/utils";
+import useNotesUtils from "@/features/notes/hooks/useNotesUtils";
 import { useNotes } from "@/store";
-import { newNote } from "../addNote/utils";
 
 export default function Forms({ defaultValues = {}, isUpdate = false }) {
   // const textareaRef = useRef(null);
@@ -28,24 +27,25 @@ export default function Forms({ defaultValues = {}, isUpdate = false }) {
   //     textareaRef.current.style.maxHeight = "50svh";
   //   }
   // }, [value]);
-  const { setIsDialogModalOpen, username, fetchNotes, noteId } = useNotes(
+  const { setIsDialogModalOpen, fetchNotes, noteId } = useNotes(
     (state) => state
   );
+  const { newNote, capitalize, userNotesPath } = useNotesUtils();
   const smallForm = useForm({ defaultValues });
   const onSubmit = ({ title, note }) => {
     if (isUpdate) {
+      const updates = {};
       if (title) {
-        update(ref(db, `/notes/${username}/${noteId}`), {
-          title: capitalize(title) || "",
-        });
+        updates.title = capitalize(title) || "";
       }
       if (note) {
-        update(ref(db, `/notes/${username}/${noteId}`), {
-          note: capitalize(note),
-        });
+        updates.note = capitalize(note);
+      }
+      if (Object.keys(updates).length > 0) {
+        update(ref(db, `${userNotesPath}${noteId}`), updates);
       }
     } else {
-      newNote(username, title, note, fetchNotes);
+      newNote(title, note, fetchNotes);
     }
     setIsDialogModalOpen(false);
   };
