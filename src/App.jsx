@@ -5,22 +5,23 @@ import Signup from "./pages/authentication/Signup";
 import Notes from "./pages/Notes";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-// import { useNotes } from "@/store";
+import useCookie from "./hooks/useCookie";
 
 function App() {
-  // const ProtectedRoutes = () => {
-  //   const { user } = useNotes((state) => state);
-  //   return user ? <Outlet /> : <Navigate to="/login" />;
-  // };
+  const ProtectedRoutes = () => {
+    const { cookies } = useCookie();
+    const user = cookies.user;
+    return user ? <Outlet /> : <Navigate to="/login" />;
+  };
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/signup" element={<Signup />} />
-      {/* <Route element={<ProtectedRoutes />}> */}
-      <Route path="/notes" element={<Notes />} />
-      {/* </Route> */}
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/notes" element={<Notes />} />
+      </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

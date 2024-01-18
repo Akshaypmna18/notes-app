@@ -27,9 +27,6 @@ const notes = (set) => ({
 
   notes: [],
   fetchNotes: () => fetchNotes(set),
-
-  user: false,
-  setUser: (user) => set({ user }),
 });
 
 export const useNotes = create(notes);

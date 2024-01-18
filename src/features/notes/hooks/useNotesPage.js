@@ -3,6 +3,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useNavigate } from "react-router-dom";
 import { useNotes } from "@/store";
+import useCookie from "@/hooks/useCookie";
 
 const useNotesPage = () => {
   const {
@@ -16,6 +17,7 @@ const useNotesPage = () => {
   } = useNotes((state) => state);
   const navigate = useNavigate();
   const [notesArray, setNotesArray] = useState([]);
+  const { removeCookie } = useCookie();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -39,6 +41,7 @@ const useNotesPage = () => {
     signOut(auth).then(() => {
       navigate("/login");
       setUser(false);
+      removeCookie("user");
     });
   };
   return { onLogout, notesArray };
