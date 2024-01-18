@@ -11,7 +11,6 @@ const useNotesPage = () => {
     setUsername,
     fetchNotes,
     notes,
-    setUser,
     // notesArray,
     // setNotesArray,
   } = useNotes((state) => state);
@@ -40,7 +39,6 @@ const useNotesPage = () => {
   const onLogout = () => {
     signOut(auth).then(() => {
       navigate("/login");
-      setUser(false);
       removeCookie("user");
     });
   };
