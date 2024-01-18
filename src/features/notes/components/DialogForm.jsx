@@ -59,6 +59,7 @@ export default function Forms({ defaultValues = {}, isUpdate = false }) {
               <FormControl>
                 <Input placeholder="Add title here..." {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
