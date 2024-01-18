@@ -47,6 +47,12 @@ export default function Forms({ defaultValues = {}, isUpdate = false }) {
         <FormField
           control={smallForm.control}
           name="title"
+          rules={{
+            maxLength: {
+              value: 25,
+              message: "Title length should not exceed 25 characters",
+            },
+          }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Title</FormLabel>
