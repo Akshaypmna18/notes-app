@@ -18,11 +18,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNotes } from "@/store";
 import useNotesUtils from "@/features/notes/hooks/useNotesUtils";
+import useResizeTextarea from "../hooks/useResizeTextares";
 
 function CollapsibleForm({ notesArray }) {
   const { fetchNotes } = useNotes((state) => state);
   const { newNote } = useNotesUtils();
   const largeForm = useForm({ defaultValues: { title: "", note: "" } });
+  const rows = useResizeTextarea(largeForm, "note");
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
 
   const formRef = useRef();
@@ -97,6 +99,7 @@ function CollapsibleForm({ notesArray }) {
                 <FormItem>
                   <FormControl>
                     <Textarea
+                      rows={rows}
                       placeholder="Add note here..."
                       {...field}
                       className="w-[20rem]"

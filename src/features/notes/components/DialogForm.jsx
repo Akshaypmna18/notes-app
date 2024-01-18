@@ -15,23 +15,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import useNotesUtils from "@/features/notes/hooks/useNotesUtils";
 import { useNotes } from "@/store";
+import useResizeTextarea from "../hooks/useResizeTextares";
 
 export default function Forms({ defaultValues = {}, isUpdate = false }) {
-  // const textareaRef = useRef(null);
-  // const [value, setValue] = useState("");
-  // useEffect(() => {
-  //   if (textareaRef.current) {
-  //     textareaRef.current.style.height = "auto";
-  //     textareaRef.current.style.minHeight =
-  //       textareaRef.current.scrollHeight + "px";
-  //     textareaRef.current.style.maxHeight = "50svh";
-  //   }
-  // }, [value]);
   const { setIsDialogModalOpen, fetchNotes, noteId } = useNotes(
     (state) => state
   );
   const { newNote, capitalize, userNotesPath } = useNotesUtils();
   const smallForm = useForm({ defaultValues });
+  const rows = useResizeTextarea(smallForm, "note");
   const onSubmit = ({ title, note }) => {
     if (isUpdate) {
       const updates = {};
@@ -78,9 +70,7 @@ export default function Forms({ defaultValues = {}, isUpdate = false }) {
               <FormLabel>Note</FormLabel>
               <FormControl>
                 <Textarea
-                  // value={value}
-                  // onChange={(e) => setValue(e.target.value)}
-                  // ref={textareaRef}
+                  rows={rows}
                   placeholder="Add note here..."
                   {...field}
                 />

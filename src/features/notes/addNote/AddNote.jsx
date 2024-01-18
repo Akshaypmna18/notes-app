@@ -1,4 +1,4 @@
-import useWindowSize from "@/features/notes/addNote/useWindowSize";
+import useWindowSize from "@/features/notes/hooks/useWindowSize";
 import CollapsibleForm from "@/features/notes/addNote/CollapsibleForm";
 import DialogModal from "@/features/notes/components/DialogModal";
 import { Button } from "@/components/ui/button";
