@@ -9,7 +9,6 @@ function CopyNote() {
   const { toast } = useToast();
   const handleCopy = () => {
     toast({
-      variant: "success",
       description: "Note copied to clipboard successsfully",
       duration: 2500,
     });
