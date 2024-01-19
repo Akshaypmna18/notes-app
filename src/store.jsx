@@ -25,6 +25,12 @@ const notes = (set) => ({
   noteId: "",
   setNoteId: (noteId) => set({ noteId }),
 
+  title: "",
+  setTitle: (title) => set({ title }),
+
+  note: "",
+  setNote: (note) => set({ note }),
+
   notes: [],
   fetchNotes: () => fetchNotes(set),
 });

@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { useNotes } from "@/store";
 
 const useNotesComp = (notesArray) => {
-  const { setIsDialogModalOpen, filterValue, setNoteId } = useNotes(
-    (state) => state
-  );
+  const { setIsDialogModalOpen, filterValue, setNoteId, setNote, setTitle } =
+    useNotes((state) => state);
   const [isChecked, setIsChecked] = useState([]);
   const [notesId, setNotesId] = useState([]);
 
@@ -46,6 +45,13 @@ const useNotesComp = (notesArray) => {
     setNotesId([]);
   }, [notesArray, filterValue]);
 
+  const handleNoteClick = (noteId, title, note) => {
+    setIsDialogModalOpen();
+    setNoteId(noteId);
+    setTitle(title);
+    setNote(note);
+  };
+
   return {
     setIsDialogModalOpen,
     setNotesId,
@@ -55,6 +61,7 @@ const useNotesComp = (notesArray) => {
     isChecked,
     handleCheckboxClick,
     highlightMatches,
+    handleNoteClick,
   };
 };
 

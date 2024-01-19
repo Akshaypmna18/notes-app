@@ -2,24 +2,25 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import DialogModal from "@/features/notes/components/DialogModal";
 import DialogForm from "@/features/notes/components/DialogForm";
-import DeleteSingleNote from "./deleteNotes/singleNote";
+import { Toaster } from "@/components/ui/toaster";
 import DeleteMultipleNotes from "./deleteNotes/multipleNotes";
 import useNotesComp from "./hooks/useNotesComp";
+import NotesMenu from "./notesMenu";
 
 function NotesComp({ notesArray }) {
   const {
     filteredNotes,
-    setIsDialogModalOpen,
-    setNoteId,
     isChecked,
     handleCheckboxClick,
     highlightMatches,
     setNotesId,
     notesId,
+    handleNoteClick,
   } = useNotesComp(notesArray);
 
   return (
     <section className="columns-2xs max-[640px]:pt-7">
+      <Toaster />
       {filteredNotes.length > 0 &&
         filteredNotes.map(([noteId, { title, note }], index) => (
           <DialogModal
@@ -33,15 +34,12 @@ function NotesComp({ notesArray }) {
             )}
           >
             <div
-              className="border p-4 rounded-md max-w-full m-2 max-h-[70svh] overflow-hidden max-[640px]:mt-6 hover:border-primary cursor-pointer inline"
-              onClick={() => {
-                setIsDialogModalOpen();
-                setNoteId(noteId);
-              }}
+              className="border p-4 rounded-md max-w-full m-2 max-h-[70svh] overflow-hidden max-[640px]:mt-6 lg:hover:border-primary cursor-pointer inline"
+              onClick={() => handleNoteClick(noteId, title, note)}
             >
-              <p className="font-semibold capitalize flex justify-between items-center">
+              <div className="font-semibold capitalize flex justify-between items-center">
                 <Checkbox
-                  className="min-h-[calc(0.5rem+0.5vw)] min-w-[calc(0.5rem+0.5vw)] cursor-pointer              hover:border-primaryColor"
+                  className="min-h-[calc(0.5rem+0.5vw)] min-w-[calc(0.5rem+0.5vw)] cursor-pointer              lg:hover:border-primaryColor"
                   checked={isChecked[index]}
                   onClick={(e) => {
                     e.preventDefault();
@@ -49,8 +47,8 @@ function NotesComp({ notesArray }) {
                   }}
                 />
                 <big className="mx-4">{title}</big>
-                <DeleteSingleNote />
-              </p>
+                <NotesMenu />
+              </div>
               <Separator className="mt-2 mb-3" />
               <p className="break-words">{highlightMatches(note)}</p>
             </div>

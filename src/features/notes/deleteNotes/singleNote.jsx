@@ -7,11 +7,12 @@ function DeleteSinlgeNote() {
   const { noteId } = useNotes((state) => state);
   const { deleteNote } = useNotesUtils();
   return (
-    <span onClick={(e) => e.preventDefault()}>
-      <AlertDialogModal desc={`this`} func={() => deleteNote(noteId)}>
-        <TrashIcon className="min-h-[calc(1.25rem+0.1vw)] min-w-[calc(1.25rem+0.1vw)] cursor-pointer hover:text-deleteIcon" />
-      </AlertDialogModal>
-    </span>
+    <AlertDialogModal desc={`this`} func={() => deleteNote(noteId)}>
+      <p className="space-x-2 flex">
+        <TrashIcon className="min-h-[calc(1.25rem+0.1vw)] min-w-[calc(1.25rem+0.1vw)]" />
+        <span>Delete this note</span>
+      </p>
+    </AlertDialogModal>
   );
 }
 
