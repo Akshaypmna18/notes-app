@@ -20,7 +20,7 @@ function NotesComp({ notesArray }) {
 
   return (
     <section className="columns-2xs max-[640px]:pt-7">
-      <Toaster />
+      <Toaster className="bg-primaryColor text-white" />
       {filteredNotes.length > 0 &&
         filteredNotes.map(([noteId, { title, note }], index) => (
           <DialogModal
