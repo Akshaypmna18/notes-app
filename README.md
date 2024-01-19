@@ -28,6 +28,7 @@ This project is built with ([Vite React](https://vitejs.dev/guide)).
 ⭐Demo Link : https://aks-notes-app.vercel.app
 </br>
 
-![Untitled](https://github.com/Akshaypmna18/notes-app/assets/67232475/fd3709ff-c082-4365-b969-0dec3b41bc82)
+![Untitled](https://github.com/Akshaypmna18/notes-app/assets/67232475/7de0567d-876b-4c28-a0aa-d717bd7a4625)
+
 
 
