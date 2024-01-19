@@ -5,7 +5,7 @@ import DialogForm from "@/features/notes/components/DialogForm";
 import { Toaster } from "@/components/ui/toaster";
 import DeleteMultipleNotes from "./deleteNotes/multipleNotes";
 import useNotesComp from "./hooks/useNotesComp";
-import NotesMenu from "./notesMenu";
+import NotesMenu from "./NotesMenu";
 
 function NotesComp({ notesArray }) {
   const {
