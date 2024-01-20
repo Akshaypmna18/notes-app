@@ -52,7 +52,7 @@ function CollapsibleForm({ notesArray }) {
             notesArray.length === 0
               ? "absolute top-[calc(0.9rem+1vw)] left-[50%] translate-x-[-50%]"
               : ""
-          } space-y-4 w-[20rem] mx-auto mt-4`}
+          } hidden sm:block space-y-4 w-[20rem] mx-auto mt-4`}
           ref={formRef}
         >
           <FormField
