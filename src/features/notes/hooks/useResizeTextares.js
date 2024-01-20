@@ -7,7 +7,11 @@ const useResizeTextarea = (form, name) => {
   const [rows, setRows] = useState(2);
   useEffect(() => {
     const charactersPerLine = screenWidth < 300 ? 30 : 40;
-    const newRows = Math.max(2, Math.ceil(text.length / charactersPerLine));
+    const len = text.split("\n").reduce((acc, line) => {
+      return acc + Math.ceil(line.length / charactersPerLine);
+    }, 0);
+    const newRows = Math.max(2, len);
+
     setRows(newRows);
   }, [text]);
   return rows;
