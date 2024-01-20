@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export function ButtonComponent({ children, onClick, className }) {
   return (
@@ -54,3 +55,7 @@ export function PwdInput({
     </div>
   );
 }
+
+export const Loader = () => {
+  return <ClipLoader color="#fff" size={20} />;
+};

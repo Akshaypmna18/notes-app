@@ -17,8 +17,10 @@ import {
   ButtonComponent as Btn,
   SeparatorComponent as Separator,
   PwdInput,
+  Loader,
 } from "@/features/authentication/Components";
 import useAuthFunctions from "./useAuthFunctions";
+import { useNotes } from "@/store";
 
 function SignupForm() {
   const { handleSignup, handleGoogleSignup } = useAuthFunctions();
@@ -28,6 +30,8 @@ function SignupForm() {
   const password = form.watch("password");
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const { isLoading } = useNotes((state) => state);
 
   return (
     <>
@@ -130,7 +134,7 @@ function SignupForm() {
             />
           )}
           <Button className="w-full" type="submit">
-            Signup
+            {isLoading === true ? <Loader /> : "Login"}
           </Button>
         </form>
       </Form>

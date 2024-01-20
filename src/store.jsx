@@ -43,6 +43,9 @@ const notes = (set) => ({
 
   isChecked: [],
   setIsChecked: (isChecked) => set({ isChecked }),
+
+  isLoading: [],
+  setIsLoading: (isLoading) => set({ isLoading }),
 });
 
 export const useNotes = create(notes);

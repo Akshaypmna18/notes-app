@@ -2,6 +2,7 @@ import {
   ButtonComponent as Btn,
   SeparatorComponent as Separator,
   PwdInput,
+  Loader,
 } from "@/features/authentication/Components";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import useAuthFunctions from "./useAuthFunctions";
+import { useNotes } from "@/store";
 
 function LoginForm() {
   const { handleLogin, handleGoogleLogin, handleTestAccountLogin } =
@@ -31,6 +33,8 @@ function LoginForm() {
 
   const [isChecked, setIsChecked] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { isLoading } = useNotes((state) => state);
 
   return (
     <>
@@ -108,7 +112,7 @@ function LoginForm() {
             </span>
           </div>
           <Button className="w-full" type="submit">
-            Login
+            {isLoading === true ? <Loader /> : "Login"}
           </Button>
         </form>
       </Form>
