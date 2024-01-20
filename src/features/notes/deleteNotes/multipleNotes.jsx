@@ -19,7 +19,7 @@ function DeleteMultipleNotes({ notesId, setNotesId }) {
       func={() => deleteMultipleNotes(notesId)}
     >
       <Button
-        className={`bg-deleteIcon hover:bg-deleteIcon z-20 fixed right-8 bottom-12 rounded-lg h-[calc(2.5rem+1vw)] w-[calc(2.5rem+1vw) sm:top-[calc(1.8rem+0.75vw)] sm:right-[calc(10rem+2vw)] sm:w-12 sm:h-10 ${
+        className={`bg-deleteIcon hover:bg-deleteIcon z-20 fixed right-8 bottom-12 rounded-lg h-[calc(2.5rem+1vw)] w-[calc(2.5rem+1vw) sm:top-[calc(1.8rem+0.75vw)] sm:right-[calc(10rem+2vw)] xl:right-[calc(18.5rem+2vw)] sm:w-12 sm:h-10 ${
           notesId.length === 0 ? "hidden" : ""
         }`}
       >
