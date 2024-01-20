@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Header from "@/layouts/Header";
 import AddNote from "@/features/notes/addNote";
-import NotesComp from "@/features/notes/NotesComp";
 import SearchNote from "@/features/notes/SearchNote";
 import useNotesPage from "@/features/notes/hooks/useNotesPage";
+import { Suspense, lazy } from "react";
+import NotesLoader from "@/layouts/NotesLoader";
+const NotesComp = lazy(() => import("@/features/notes/NotesComp"));
 
 function Notes() {
   const { notesArray, onLogout } = useNotesPage();
@@ -21,7 +23,9 @@ function Notes() {
         </Button>
         {notesArray.length > 0 && <SearchNote />}
       </header>
-      <NotesComp notesArray={notesArray} />
+      <Suspense fallback={<NotesLoader />}>
+        <NotesComp notesArray={notesArray} />
+      </Suspense>
     </main>
   );
 }
