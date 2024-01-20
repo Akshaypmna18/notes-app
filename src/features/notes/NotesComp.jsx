@@ -1,22 +1,15 @@
 import { Separator } from "@/components/ui/separator";
-import { Checkbox } from "@/components/ui/checkbox";
 import DialogModal from "@/features/notes/components/DialogModal";
 import DialogForm from "@/features/notes/components/DialogForm";
 import { Toaster } from "@/components/ui/toaster";
 import DeleteMultipleNotes from "./deleteNotes/multipleNotes";
 import useNotesComp from "./hooks/useNotesComp";
 import NotesMenu from "./NotesMenu";
+import NotesCheckbox from "./NotesCheckbox";
 
 function NotesComp({ notesArray }) {
-  const {
-    filteredNotes,
-    isChecked,
-    handleCheckboxClick,
-    highlightMatches,
-    setNotesId,
-    notesId,
-    handleNoteClick,
-  } = useNotesComp(notesArray);
+  const { filteredNotes, highlightMatches, handleNoteClick } =
+    useNotesComp(notesArray);
 
   return (
     <section className="columns-2xs max-[640px]:pt-7">
@@ -38,13 +31,10 @@ function NotesComp({ notesArray }) {
               onClick={() => handleNoteClick(noteId, title, note)}
             >
               <div className="font-semibold capitalize flex justify-between items-center">
-                <Checkbox
-                  className="min-h-[calc(0.5rem+0.5vw)] min-w-[calc(0.5rem+0.5vw)] cursor-pointer              lg:hover:border-primaryColor"
-                  checked={isChecked[index]}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleCheckboxClick(index, noteId);
-                  }}
+                <NotesCheckbox
+                  index={index}
+                  noteId={noteId}
+                  notesArray={notesArray}
                 />
                 <big className="mx-4">{highlightMatches(title)}</big>
                 <NotesMenu />
@@ -54,7 +44,7 @@ function NotesComp({ notesArray }) {
             </div>
           </DialogModal>
         ))}
-      <DeleteMultipleNotes notesId={notesId} setNotesId={setNotesId} />
+      <DeleteMultipleNotes />
     </section>
   );
 }

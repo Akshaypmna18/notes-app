@@ -37,6 +37,12 @@ const notes = (set) => ({
 
   notes: [],
   fetchNotes: () => fetchNotes(set),
+
+  notesId: [],
+  setNotesId: (notesId) => set({ notesId }),
+
+  isChecked: [],
+  setIsChecked: (isChecked) => set({ isChecked }),
 });
 
 export const useNotes = create(notes);

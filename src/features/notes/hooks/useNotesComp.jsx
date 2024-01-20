@@ -1,30 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNotes } from "@/store";
 
 const useNotesComp = (notesArray) => {
-  const { setIsDialogModalOpen, filterValue, setNoteId, setNote, setTitle } =
-    useNotes((state) => state);
-  const [isChecked, setIsChecked] = useState([]);
-  const [notesId, setNotesId] = useState([]);
+  const {
+    setIsDialogModalOpen,
+    filterValue,
+    setNoteId,
+    setNote,
+    setTitle,
+    setIsChecked,
+    setNotesId,
+  } = useNotes((state) => state);
 
   const filteredNotes = notesArray.filter(
     (item) =>
       item[1].note.toLowerCase().includes(filterValue.toLowerCase()) ||
       item[1].title.toLowerCase().includes(filterValue.toLowerCase())
   );
-
-  const handleCheckboxClick = (index, noteId) => {
-    setIsChecked((prevChecked) =>
-      prevChecked.map((item, pos) => (pos === index ? !item : item))
-    );
-    setNotesId((prevNotesId) => {
-      if (isChecked[index]) {
-        return prevNotesId.filter((id) => id !== noteId);
-      } else {
-        return [...prevNotesId, noteId];
-      }
-    });
-  };
 
   const highlightMatches = (text) => {
     if (filterValue.trim() === "") {
@@ -56,12 +48,8 @@ const useNotesComp = (notesArray) => {
 
   return {
     setIsDialogModalOpen,
-    setNotesId,
     setNoteId,
-    notesId,
     filteredNotes,
-    isChecked,
-    handleCheckboxClick,
     highlightMatches,
     handleNoteClick,
   };
