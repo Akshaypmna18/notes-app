@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { onValue, ref } from "firebase/database";
 import { db } from "./lib/firebase";
+import { devtools, persist } from "zustand/middleware";
 
 const fetchNotes = (set) => {
   onValue(ref(db, `/notes/`), (snapshot) => {
@@ -25,6 +26,9 @@ const notes = (set) => ({
   noteId: "",
   setNoteId: (noteId) => set({ noteId }),
 
+  theme: "dark",
+  setTheme: (theme) => set({ theme }),
+
   title: "",
   setTitle: (title) => set({ title }),
 
@@ -36,3 +40,5 @@ const notes = (set) => ({
 });
 
 export const useNotes = create(notes);
+
+devtools(persist(notes, { name: "theme" }));

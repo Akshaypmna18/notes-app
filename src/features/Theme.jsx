@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import {
   Tooltip,
@@ -6,26 +6,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../components/ui/tooltip";
+import { useNotes } from "@/store";
 
 function Theme({ className }) {
+  const { setTheme, theme } = useNotes((state) => state);
   const iconClassName = `min-w-[calc(1rem+1.5dvw)] min-h-[calc(1rem+1.5dvw)] cursor-pointer ${className}`;
-
-  const getTheme = () => {
-    let savedTheme = localStorage.getItem("theme");
-    return savedTheme || "dark";
-  };
-
-  const [theme, setTheme] = useState(getTheme());
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    setTheme(newTheme);
   };
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.body.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
   return (
