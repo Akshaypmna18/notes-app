@@ -7,8 +7,10 @@ const useNotesComp = (notesArray) => {
   const [isChecked, setIsChecked] = useState([]);
   const [notesId, setNotesId] = useState([]);
 
-  const filteredNotes = notesArray.filter((item) =>
-    item[1].note.toLowerCase().includes(filterValue.toLowerCase())
+  const filteredNotes = notesArray.filter(
+    (item) =>
+      item[1].note.toLowerCase().includes(filterValue.toLowerCase()) ||
+      item[1].title.toLowerCase().includes(filterValue.toLowerCase())
   );
 
   const handleCheckboxClick = (index, noteId) => {
@@ -31,7 +33,7 @@ const useNotesComp = (notesArray) => {
     const regex = new RegExp(`(${filterValue})`, "gi");
     return text.split(regex).map((part, index) =>
       regex.test(part) ? (
-        <span key={index} className="bg-yellow-600">
+        <span key={index} className="bg-yellow-600 font-semibold">
           {part}
         </span>
       ) : (

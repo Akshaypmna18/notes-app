@@ -46,7 +46,7 @@ function NotesComp({ notesArray }) {
                     handleCheckboxClick(index, noteId);
                   }}
                 />
-                <big className="mx-4">{title}</big>
+                <big className="mx-4">{highlightMatches(title)}</big>
                 <NotesMenu />
               </div>
               <Separator className="mt-2 mb-3" />
