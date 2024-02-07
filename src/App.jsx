@@ -8,17 +8,23 @@ import NotFound from "./pages/NotFound";
 import useCookie from "./hooks/useCookie";
 
 function App() {
+  const { cookies } = useCookie();
+  const user = cookies.user;
+
   const ProtectedRoutes = () => {
-    const { cookies } = useCookie();
-    const user = cookies.user;
     return user ? <Outlet /> : <Navigate to="/login" />;
+  };
+  const PublicRoutes = () => {
+    return user ? <Navigate to="/notes" /> : <Outlet />;
   };
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route element={<PublicRoutes />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/signup" element={<Signup />} />
+      </Route>
       <Route element={<ProtectedRoutes />}>
         <Route path="/notes" element={<Notes />} />
       </Route>
