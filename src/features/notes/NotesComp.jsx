@@ -36,7 +36,7 @@ function NotesComp({ notesArray }) {
                   noteId={noteId}
                   notesArray={notesArray}
                 />
-                <big className="mx-4">{highlightMatches(title)}</big>
+                <big className="mx-4 uppercase">{highlightMatches(title)}</big>
                 <NotesMenu />
               </div>
               <Separator className="mt-2 mb-3" />
