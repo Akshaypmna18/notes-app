@@ -14,7 +14,6 @@ function DialogModal({ children, title, Forms }) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         className="sm:max-w-[425px]"
-        onEscapeKeyDown={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
         onOpenAutoFocus={(e) => {
           if (title === "Update note") e.preventDefault();
