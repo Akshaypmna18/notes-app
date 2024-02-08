@@ -6,7 +6,7 @@ const useResizeTextarea = (form, name) => {
   const text = form.watch(name);
   const [rows, setRows] = useState(2);
   useEffect(() => {
-    const charactersPerLine = screenWidth < 300 ? 30 : 40;
+    const charactersPerLine = screenWidth < 300 ? 50 : 80;
     const len = text.split("\n").reduce((acc, line) => {
       return acc + Math.ceil(line.length / charactersPerLine);
     }, 0);

@@ -13,7 +13,6 @@ function DialogModal({ children, title, Forms }) {
     <Dialog open={isDialogModalOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
-        className="sm:max-w-[425px]"
         onInteractOutside={(e) => e.preventDefault()}
         onOpenAutoFocus={(e) => {
           if (title === "Update note") e.preventDefault();
