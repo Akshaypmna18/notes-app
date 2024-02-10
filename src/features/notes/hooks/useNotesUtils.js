@@ -3,7 +3,7 @@ import { useNotes } from "@/store";
 import { ref, remove, push, set } from "firebase/database";
 
 const useNotesUtils = () => {
-  const { username } = useNotes((state) => state);
+  const username = useNotes((state) => state.username);
   const userNotesPath = `/notes/${username}/`;
 
   const deleteNote = (noteId) => remove(ref(db, `${userNotesPath}${noteId}`));
