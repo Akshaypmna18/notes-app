@@ -6,7 +6,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import DeleteSinlgeNote from "./deleteNotes/singleNote";
+import DeleteSinlgeNote from "../deleteNotes/singleNote";
 import CopyNote from "./CopyNote";
 
 function NotesMenu() {
@@ -14,7 +14,7 @@ function NotesMenu() {
     <span onClick={(e) => e.preventDefault()}>
       <Menubar className="border-0 w-2 relative ">
         <MenubarMenu>
-          <MenubarTrigger className="cursor-pointer absolute left-[-1rem]">
+          <MenubarTrigger className="cursor-pointer absolute -right-2 px-1">
             <DotsVerticalIcon />
           </MenubarTrigger>
           <MenubarContent onCloseAutoFocus={(e) => e.preventDefault()}>
