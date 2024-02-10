@@ -1,4 +1,3 @@
-import useWindowSize from "@/features/notes/hooks/useWindowSize";
 import CollapsibleForm from "@/features/notes/addNote/CollapsibleForm";
 import DialogModal from "@/features/notes/components/DialogModal";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import DialogForm from "@/features/notes/components/DialogForm";
 import { useNotes } from "@/store";
 
 function AddNote({ notesArray }) {
-  const { setIsDialogModalOpen } = useNotes((state) => state);
+  const setIsDialogModalOpen = useNotes((state) => state.setIsDialogModalOpen);
 
   return (
     <>
