@@ -27,7 +27,7 @@ function NotesComp({ notesArray }) {
             )}
           >
             <div
-              className="border p-4 rounded-md max-w-full m-2 max-h-[70svh] overflow-hidden max-[640px]:mt-6 lg:hover:border-primary cursor-pointer inline"
+              className="border p-4 rounded-md max-w-full m-2 max-h-[30svh] sm:max-h-[70svh] overflow-hidden max-[640px]:mt-6 lg:hover:border-primary cursor-pointer inline"
               onClick={() => handleNoteClick(noteId, title, note)}
             >
               <div className="font-semibold capitalize flex justify-between items-center">
