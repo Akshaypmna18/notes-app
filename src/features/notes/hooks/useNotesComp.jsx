@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNotes } from "@/store";
 
 const useNotesComp = (notesArray) => {
@@ -12,11 +12,13 @@ const useNotesComp = (notesArray) => {
     setNotesId,
   } = useNotes((state) => state);
 
-  const filteredNotes = notesArray.filter(
-    (item) =>
-      item[1].note.toLowerCase().includes(filterValue.toLowerCase()) ||
-      item[1].title.toLowerCase().includes(filterValue.toLowerCase())
-  );
+  const filteredNotes = useMemo(() => {
+    return notesArray.filter(
+      (item) =>
+        item[1].note.toLowerCase().includes(filterValue.toLowerCase()) ||
+        item[1].title.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  }, [notesArray, filterValue]);
 
   const highlightMatches = (text) => {
     if (filterValue.trim() === "") {
