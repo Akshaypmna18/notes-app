@@ -32,9 +32,8 @@ function LoginForm() {
   const form = useForm({ defaultValues });
 
   const [isChecked, setIsChecked] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const { isLoading } = useNotes((state) => state);
+  const isLoading = useNotes((state) => state.isLoading);
 
   return (
     <>
@@ -87,11 +86,7 @@ function LoginForm() {
                   </p>
                 </FormLabel>
                 <FormControl>
-                  <PwdInput
-                    field={field}
-                    showPassword={showPassword}
-                    setShowPassword={setShowPassword}
-                  />
+                  <PwdInput field={field} key="login" />
                 </FormControl>
                 <FormDescription></FormDescription>
                 <FormMessage />

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
@@ -29,9 +28,7 @@ function SignupForm() {
   const form = useForm({ defaultValues });
   const password = form.watch("password");
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const { isLoading } = useNotes((state) => state);
+  const isLoading = useNotes((state) => state.isLoading);
 
   return (
     <>
@@ -96,11 +93,7 @@ function SignupForm() {
                   <big>Password</big>
                 </FormLabel>
                 <FormControl>
-                  <PwdInput
-                    field={field}
-                    showPassword={showPassword}
-                    setShowPassword={setShowPassword}
-                  />
+                  <PwdInput field={field} key="signup" />
                 </FormControl>
                 <FormDescription>Set a strong password</FormDescription>
                 <FormMessage />
@@ -123,8 +116,7 @@ function SignupForm() {
                   <FormControl>
                     <PwdInput
                       field={field}
-                      showPassword={showPassword}
-                      setShowPassword={setShowPassword}
+                      key="confirmPassword"
                       isConfirmPassword={true}
                     />
                   </FormControl>

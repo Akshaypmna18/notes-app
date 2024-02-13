@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useState } from "react";
 
 export function ButtonComponent({ children, onClick, className }) {
   return (
@@ -26,12 +27,8 @@ export function SeparatorComponent({ children }) {
   );
 }
 
-export function PwdInput({
-  field,
-  showPassword,
-  setShowPassword,
-  isConfirmPassword,
-}) {
+export function PwdInput({ field, isConfirmPassword }) {
+  const [showPassword, setShowPassword] = useState(false);
   const size = 20;
   return (
     <div className="relative">
