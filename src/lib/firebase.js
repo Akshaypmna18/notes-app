@@ -8,14 +8,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBVq4v7COZId4eQi_tcrVDa86QQxCkxMis",
-  authDomain: "notes-app-aks.firebaseapp.com",
-  projectId: "notes-app-aks",
-  storageBucket: "notes-app-aks.appspot.com",
-  messagingSenderId: "953162403763",
-  appId: "1:953162403763:web:a0f540c16ccf5c1a2ec5c6",
-  databaseURL:
-    "https://notes-app-aks-default-rtdb.asia-southeast1.firebasedatabase.app",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGE_SENDER_ID,
+  appId: import.meta.env.VITE_MESSAGE_SENDER_ID,
+  databaseURL: import.meta.env.VITE_DATABASE_URL,
 };
 
 // Initialize Firebase
