@@ -18,9 +18,9 @@ import { useNotes } from "@/store";
 import useResizeTextarea from "../hooks/useResizeTextares";
 
 export default function Forms({ defaultValues = {}, isUpdate = false }) {
-  const { setIsDialogModalOpen, fetchNotes, noteId } = useNotes(
-    (state) => state
-  );
+  const setIsDialogModalOpen = useNotes((state) => state.setIsDialogModalOpen);
+  const fetchNotes = useNotes((state) => state.fetchNotes);
+  const noteId = useNotes((state) => state.noteId);
   const { newNote, capitalize, userNotesPath } = useNotesUtils();
   const smallForm = useForm({ defaultValues });
   const rows = useResizeTextarea(smallForm, "note");
